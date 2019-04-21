@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Codigami/hapi-starter-kit"
+    "url": "https://omnibusinc@bitbucket.org/omnibusinc/office-app-backend.git"
   },
   "main": "index.js",
   "engines": {
@@ -22,7 +22,6 @@
     "db:seed": "sequelize db:seed:all"
   },
   "dependencies": {
-    "axios": "0.16.2",
     "bluebird": "3.5.0",
     "boom": "5.2.0",
     "bunyan": "1.8.12",
@@ -41,14 +40,5 @@
     "sequelize": "5.7.0",
     "vision": "4.1.1"
   },
-  "devDependencies": {
-    "chai": "4.1.1",
-    "codeclimate-test-reporter": "0.5.0",
-    "husky": "0.14.3",
-    "istanbul": "1.1.0-alpha.1",
-    "mocha": "3.5.0",
-    "nock": "9.0.14",
-    "sinon": "3.2.1",
-    "sinon-chai": "2.13.0"
-  }
+  "devDependencies": {}
 }
