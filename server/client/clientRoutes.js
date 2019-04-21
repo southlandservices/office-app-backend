@@ -1,9 +1,9 @@
 'use strict';
 
-const httpStatus = require('http-status')
 const _ = require('lodash')
-const config = require('config')
 const service = require('./clientService');
+const { handleInitialSuccess, handleInitialFailure } = require('../utils/routeHelpers');
+
 const routes = [];
 
 routes.push(
@@ -16,11 +16,9 @@ routes.push(
         const data = !query ?
           await service.getClients() :
           await service.getClient(query);
-        return h.response({ data });
+        return handleInitialSuccess(h, data);
       } catch (error) {
-        const errorMessage = 'Failed to retrieve client(s)';
-        !error.logged && logger.error(error, errorMessage)
-        return h.response(boom.boomify(error, { statusCode: httpStatus.INTERNAL_SERVER_ERROR, message: errorMessage }))
+        return handleInitialFailure(h, 'Failed to retrieve client(s)');
       }
     },
     config: {
@@ -34,11 +32,9 @@ routes.push(
       const { id } = req.params;
       try {
         const data = await service.getClientById(id);
-        return h.response({ data });
+        return handleInitialSuccess(h, data);
       } catch (error) {
-        const errorMessage = `Failed to retrieve client with id: ${id}`;
-        !error.logged && logger.error(error, errorMessage)
-        return h.response(boom.boomify(error, { statusCode: httpStatus.INTERNAL_SERVER_ERROR, message: errorMessage }))
+        return handleInitialFailure(h, `Failed to retrieve client with id: ${id}`);
       }
     },
     config: {

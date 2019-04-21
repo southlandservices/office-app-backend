@@ -1,5 +1,6 @@
 'use strict';
 
+const bcrypt = require('bcrypt')
 const models = require('../../models');
 
 const publicAttributes = [
@@ -29,6 +30,32 @@ const baseQuery = {
   }]
 };
 
+const saltRounds = 10;
+
+const hashPassword = async (password) => {
+  bcrypt.genSalt(saltRounds, (err, salt) => {
+    bcrypt.hash(password, salt, (err, hash) => {
+      return hash;
+    })
+  })
+}
+
+const createUser = async (data) => {
+  const { email, password } = data;
+  const hashedPasword = await hashPassword(password);
+  const userData = Object.assign(data, { password: hashedPasword });
+  await models.User.create(userData);
+  const user = await getUser({ email });
+  return user;
+}
+
+const updateUser = async (id, data) => {
+  return models.User.update(
+    { ...data },
+    { where: { id } }
+  )
+}
+
 const getUsers = async () => {
   return models.User.findAll(setAttributes(baseQuery));
 }
@@ -42,6 +69,10 @@ const getUser = async (query) => {
   return models.User.findAll(parameterizedQuery);
 }
 
+const deleteUser = async (id) => {
+  return models.User.destroy({ where: { id }});
+}
+
 const setAttributes = (q, role = 'Tech') => {
   if(role === 'Admin') {
     q.attributes = adminAttributes;
@@ -50,7 +81,10 @@ const setAttributes = (q, role = 'Tech') => {
 }
 
 module.exports = {
+  createUser,
+  updateUser,
   getUsers,
   getUserById,
-  getUser
+  getUser,
+  deleteUser
 }

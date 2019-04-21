@@ -8,7 +8,8 @@ if (process.env.NODE_ENV === 'production') {
 const config = require('config')
 const server = require('./server')
 const logger = require('./server/utils/logger')
-const models = require('./models');
+const models = require('./models')
+const { configureAuth } = require('./server/utils/auth')
 
 const gracefulStopServer = function () {
   // Wait 10 secs for existing connection to close and then exit.
@@ -59,6 +60,7 @@ const startServer = async function () {
   try {
     // add things here before the app starts, like database connection check etc
     const hapiServer = await server.deployment();
+    await configureAuth(hapiServer);
     await hapiServer.start();
     initDb(() => {
       logger.info(`server started at port: ${config.get('app.port')} with env: ${config.util.getEnv('NODE_ENV')}`)
