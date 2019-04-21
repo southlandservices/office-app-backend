@@ -24,11 +24,11 @@ let plugins = []
 
 if (config.util.getEnv('NODE_ENV') === DEVELOPMENT) {
 
-  // add hapi swagger integration
+//   // add hapi swagger integration
   plugins = plugins.concat([Inert,
     Vision,
     {
-      register: HapiSwagger,
+      plugin: HapiSwagger,
       options: {
         info: {
           'title': Package.description,
@@ -40,8 +40,11 @@ if (config.util.getEnv('NODE_ENV') === DEVELOPMENT) {
 
   // add good console for log reporting
   plugins.push({
-    register: Good,
+    plugin: Good,
     options: {
+      ops: {
+        interval: 1000
+      },
       reporters: {
         console: [{
           module: 'good-console'
