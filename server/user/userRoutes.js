@@ -10,17 +10,17 @@ routes.push(
   {
     method: 'GET',
     path: '/api/v1/users',
-    async handler(req, res) {
+    async handler(req, h) {
       const { query } = req;
       try {
         const data = !query ? 
             await service.getUsers() : 
             await service.getUser(query);
-        return res({ data });
+        return h.response({ data });
       } catch(error) {
         const errorMessage = 'Failed to retrieve user(s)';
         !error.logged && logger.error(error, errorMessage)
-        return res(boom.boomify(error, { statusCode: httpStatus.INTERNAL_SERVER_ERROR, message: errorMessage }))
+        return h.response(boom.boomify(error, { statusCode: httpStatus.INTERNAL_SERVER_ERROR, message: errorMessage }))
       }
     },
     config: {
@@ -30,15 +30,15 @@ routes.push(
   {
     method: 'GET',
     path: '/api/v1/users/{id}',
-    async handler(req, res) {
+    async handler(req, h) {
       const { id } = req.params;
       try {
         const data = await service.getUserById(id);
-        return res({ data });
+        return h.response({ data });
       } catch (error) {
         const errorMessage = `Failed to retrieve user with id: ${id}`;
         !error.logged && logger.error(error, errorMessage)
-        return res(boom.boomify(error, { statusCode: httpStatus.INTERNAL_SERVER_ERROR, message: errorMessage }))
+        return h.response(boom.boomify(error, { statusCode: httpStatus.INTERNAL_SERVER_ERROR, message: errorMessage }))
       }
     },
     config: {

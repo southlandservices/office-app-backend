@@ -7,26 +7,28 @@ const routes = require('./routes')
 const plugins = require('./plugins')
 const logger = require('./server/utils/logger')
 
-const server = new Hapi.Server()
+const options = {
+  ops: {
+    interval: 1000
+  },
+  reporters: {
+    console: [{
+      module: 'good-console'
+    }, 'stdout']
+  }
+};
 
-server.connection({
-  port: config.get('app.port')
-})
+exports.deployment = async () => {
+  const server = new Hapi.Server({
+    port: config.get('app.port')
+  });
 
-// attach routes here
-server.route(routes)
-
-// register plugins
-const registerPlugins = async () => {
   try {
     await server.register(plugins)
+    server.route(routes)
   } catch (error) {
     logger.error(error, 'Failed to register hapi plugins')
     throw error
   }
+  return server;
 }
-
-registerPlugins()
-
-// export modules
-module.exports = server
