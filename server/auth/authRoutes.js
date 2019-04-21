@@ -3,6 +3,7 @@
 const Joi = require('joi');
 const _ = require('lodash')
 const { login } = require('../utils/auth');
+const { handleInitialSuccess, handleInitialFailure } = require('../utils/routeHelpers')
 
 const routes = [];
 
@@ -12,7 +13,12 @@ routes.push(
     path: '/authentication',
     handler: async (req, h) => {
       const { email, password } = req.payload;
-      return login(email, password);
+      try {
+        const authenticated = await login(email, password);
+        return handleInitialSuccess(h, authenticated);
+      } catch (error) {
+        return handleInitialFailure(h, 'Failed to authenticate');
+      }
     },
     config: { 
       auth: false,

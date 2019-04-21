@@ -22,8 +22,7 @@ routes.push(
       }
     },
     config: {
-      tags: ['api', 'v1', 'users'],
-      auth: false
+      tags: ['api', 'v1', 'users']
     }
   },
   {

@@ -19,6 +19,12 @@ const privateAttributes = [
   'role'
 ];
 
+const authAttributes = [
+  'id',
+  'email',
+  'password'
+];
+
 const adminAttributes = publicAttributes.concat(privateAttributes);
 
 const baseQuery = {
@@ -69,6 +75,12 @@ const getUser = async (query) => {
   return models.User.findAll(parameterizedQuery);
 }
 
+const getUserForAuth = async(query) => {
+  const parameterizedQuery = Object.assign(baseQuery, { attributes: authAttributes, where: query });
+  const user = await models.User.findOne(parameterizedQuery);
+  return user.dataValues;
+}
+
 const deleteUser = async (id) => {
   return models.User.destroy({ where: { id }});
 }
@@ -86,5 +98,6 @@ module.exports = {
   getUsers,
   getUserById,
   getUser,
+  getUserForAuth,
   deleteUser
 }

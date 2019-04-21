@@ -1,34 +1,47 @@
 const jwtPlugin = require('hapi-auth-jwt2').plugin
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 const Boom = require('boom')
+const userService = require('../user/userService')
 
 // This will be in an environment variable in production
 const JWT_KEY = '123SecretKey'
 
-var validate = function (credentials) {
+const validate = async (decoded, request, h) => {
   // Run any checks here to confirm we want to grant these credentials access
+  // verify the email exists in the db?
   return {
     isValid: true,
-    credentials // request.auth.credentials
+    decoded
   }
 }
 
 exports.configureAuth = async (server) => {
   await server.register(jwtPlugin)
-  server.auth.strategy('admin', 'jwt', {
+  server.auth.strategy('jwt', 'jwt', {
     key: JWT_KEY,
     validate,
     verifyOptions: { algorithms: ['HS256'] }
   })
 
   // Default all routes to require JWT and opt out for public routes
-  server.auth.default('admin')
+  server.auth.default('jwt')
 }
 
-exports.login = (email, password) => {
-  if (!(email === 'mb4@gmail.com' && password === 'bears')) return Boom.notAcceptable()
+exports.login = async (email, password) => {
   const credentials = { email }
-  const token = jwt.sign(credentials, JWT_KEY, { algorithm: 'HS256', expiresIn: '24h' })
+  const user = await userService.getUserForAuth(credentials);
+  const valid = await bcrypt.compare(password, user.password);
+  if (!valid) return Boom.notAcceptable();
+  credentials.role = user.userRole.name;
+  const token = jwt.sign(
+    credentials, 
+    JWT_KEY, 
+    {
+      algorithm: 'HS256',
+      expiresIn: '24h'
+    }
+  )
 
   return { token }
 }
