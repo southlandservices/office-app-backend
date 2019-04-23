@@ -43,7 +43,7 @@ const getClientContactById = async (id) => {
 
 const getClientContactsByClientId = async (clientId) => {
   const parameterizedQuery = Object.assign(setAttributes(baseQuery), { where: { clientId } });
-  return models.ClientContact.findAll(parameterizedQuery);
+  return models.ClientContact.findAll(setAttributes(parameterizedQuery));
 }
 
 module.exports = {

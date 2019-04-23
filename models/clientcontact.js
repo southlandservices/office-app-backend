@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     models.ClientContact.hasOne(models.Client, {
       foreignKey: 'id',
+      sourceKey: 'clientId',
       as: 'client'
     })
   };
