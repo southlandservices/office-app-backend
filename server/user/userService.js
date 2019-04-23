@@ -2,6 +2,7 @@
 
 const bcrypt = require('bcrypt')
 const models = require('../../models');
+const { setAttributes } = require('../utils/serviceHelpers');
 
 const publicAttributes = [
   'id',
@@ -83,13 +84,6 @@ const getUserForAuth = async(query) => {
 
 const deleteUser = async (id) => {
   return models.User.destroy({ where: { id }});
-}
-
-const setAttributes = (q, role = 'Tech') => {
-  if(role === 'Admin') {
-    q.attributes = adminAttributes;
-  }
-  return q;
 }
 
 module.exports = {

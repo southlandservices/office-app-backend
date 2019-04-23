@@ -2,7 +2,7 @@
 
 const _ = require('lodash')
 const service = require('./clientService');
-const { handleInitialSuccess, handleInitialFailure } = require('../utils/routeHelpers');
+const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
 
 const routes = [];
 
@@ -12,17 +12,23 @@ routes.push(
     path: '/api/v1/clients',
     async handler(req, h) {
       const { query } = req;
-      try {
-        const data = !query ?
-          await service.getClients() :
-          await service.getClient(query);
-        return handleInitialSuccess(h, data);
-      } catch (error) {
-        return handleInitialFailure(h, 'Failed to retrieve client(s)');
+      const { role } = req.auth.credentials;
+      const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
+      if (checkPermission(req, allowedRoles)) {
+        try {
+          const data = !query ?
+            await service.getClients() :
+            await service.getClient(query);
+          return handleInitialSuccess(h, data);
+        } catch (error) {
+          return handleInitialFailure(h, 'Failed to retrieve client(s)');
+        }
+      } else {
+        permissionError(h, role);
       }
     },
     config: {
-      tags: ['api', 'v1', 'users']
+      tags: ['api', 'v1', 'clients']
     }
   },
   {
@@ -30,11 +36,61 @@ routes.push(
     path: '/api/v1/clients/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      try {
-        const data = await service.getClientById(id);
-        return handleInitialSuccess(h, data);
-      } catch (error) {
-        return handleInitialFailure(h, `Failed to retrieve client with id: ${id}`);
+      const { role } = req.auth.credentials;
+      const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
+      if (checkPermission(req, allowedRoles)) {
+        try {
+          const data = await service.getClientById(id);
+          return handleInitialSuccess(h, data);
+        } catch (error) {
+          return handleInitialFailure(h, `Failed to retrieve client with id: ${id}`);
+        }
+      } else {
+        permissionError(h, role);
+      }
+    },
+    config: {
+      tags: ['api', 'v1', 'clients']
+    }
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/clients/{id}/contacts',
+    async handler(req, h) {
+      const { id } = req.params;
+      const { role } = req.auth.credentials;
+      const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
+      if (checkPermission(req, allowedRoles)) {
+        try {
+          const data = await service.getClientContactsByClientId(id);
+          return handleInitialSuccess(h, data);
+        } catch (error) {
+          return handleInitialFailure(h, `Failed to retrieve client with id: ${id}`);
+        }
+      } else {
+        permissionError(h, role);
+      }
+    },
+    config: {
+      tags: ['api', 'v1', 'clients']
+    }
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/clients/{id}/contacts/{contactId}',
+    async handler(req, h) {
+      const { id, contactId } = req.params;
+      const { role } = req.auth.credentials;
+      const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
+      if (checkPermission(req, allowedRoles)) {
+        try {
+          const data = await service.getClientContactByContactId(contactId);
+          return handleInitialSuccess(h, data);
+        } catch (error) {
+          return handleInitialFailure(h, `Failed to retrieve client with id: ${id}`);
+        }
+      } else {
+        permissionError(h, role);
       }
     },
     config: {

@@ -1,16 +1,12 @@
 'use strict';
 
 const models = require('../../models');
+const { setAttributes } = require('../utils/serviceHelpers');
+const clientContactService = require('../clientContact/clientContactService');
 
 const publicAttributes = [
   'id',
-  'firstName',
-  'lastName',
-  'title',
-  'phone1',
-  'phone2',
-  'email',
-  'notes'
+  'name'
 ];
 
 const privateAttributes = [];
@@ -22,7 +18,7 @@ const baseQuery = {
 };
 
 const getClients = async () => {
-  return models.Client.findAll(baseQuery);
+  return models.Client.findAll(setAttributes(baseQuery));
 }
 
 const getClientById = async (id) => {
@@ -34,12 +30,18 @@ const getClient = async (query) => {
   return models.Client.findAll(parameterizedQuery);
 }
 
-const buildQuery = (query) => {
-  const queryObj = {}
+const getClientContactsByClientId = async (id) => {
+  return clientContactService.getClientContactsByClientId(id);
+}
+
+const getClientContactByContactId = async (contactId) => {
+  return clientContactService.getClientContactById(contactId);
 }
 
 module.exports = {
   getClients,
   getClientById,
-  getClient
+  getClient,
+  getClientContactsByClientId,
+  getClientContactByContactId
 }

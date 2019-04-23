@@ -12,7 +12,7 @@ module.exports = {
         email: "dictum.magna@faucibusMorbivehicula.ca",
         notes: "nostra, per inceptos hymenaeos.",
         personalMetadata: "sed dictum eleifend, nunc risus varius",
-        client: 1
+        clientId: 1
       },
       {
         firstName: "Hal",
@@ -23,7 +23,7 @@ module.exports = {
         email: "sociis.natoque@CuraeDonec.co.uk",
         notes: "feugiat placerat",
         personalMetadata: "ipsum ac mi eleifend egestas.",
-        client: 4
+        clientId: 4
       },
       {
         firstName: "Wei",
@@ -34,7 +34,7 @@ module.exports = {
         email: "tempor.bibendum.Donec@lobortisquam.ca",
         notes: "urna convallis erat,",
         personalMetadata: "ut",
-        client: 2
+        clientId: 2
       },
       {
         firstName: "Pieter",
@@ -45,7 +45,7 @@ module.exports = {
         email: "magna@vitaealiquet.net",
         notes: "Cras dolor dolor, tempus non, lacinia at, iaculis quis, pede.",
         personalMetadata: "et malesuada fames ac turpis egestas.",
-        client: 3
+        clientId: 3
       },
       {
         firstName: "Greg",
@@ -56,7 +56,7 @@ module.exports = {
         email: "lectus.Nullam@pedePraesenteu.ca",
         notes: "semper et, lacinia",
         personalMetadata: "Mauris quis turpis vitae purus",
-        client: 4
+        clientId: 4
       },
     ], {});
   },

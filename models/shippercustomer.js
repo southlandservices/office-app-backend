@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ClientContact = sequelize.define('ClientContact', {
+  const ShipperCustomer = sequelize.define('ShipperCustomer', {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     title: DataTypes.STRING,
@@ -8,16 +8,12 @@ module.exports = (sequelize, DataTypes) => {
     phone2: DataTypes.STRING,
     fax: DataTypes.STRING,
     email: DataTypes.STRING,
-    notes: DataTypes.STRING,
-    personalMetadata: DataTypes.STRING,
+    notes: DataTypes.TEXT,
+    personalMetadata: DataTypes.TEXT,
     clientId: DataTypes.INTEGER
   }, {});
-  ClientContact.associate = function(models) {
+  ShipperCustomer.associate = function(models) {
     // associations can be defined here
-    models.ClientContact.hasOne(models.Client, {
-      foreignKey: 'id',
-      as: 'client'
-    })
   };
-  return ClientContact;
+  return ShipperCustomer;
 };
