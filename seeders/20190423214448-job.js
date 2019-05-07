@@ -6,7 +6,7 @@ module.exports = {
         {
           quantity: '1',
           intakeDate: '2019-04-13 20:19:09.961',
-          followpDate: '2019-04-23 20:19:09.961',
+          followupDate: '2019-04-23 20:19:09.961',
           serviceDate: '2019-04-20 20:19:09.961',
           repId: '1', // Southland Rep (User)
           regionTechId: '1', // (User)
@@ -14,7 +14,7 @@ module.exports = {
           addressId: '1', // Address
           clientId: '1', // Client
           shipperId: '1', // ShipperCustomer
-          clientRef: 'dunno',
+          accountingRefId: 'dunno',
           encounterFrom: '2019-04-23 20:19:09.961',
           encounterTo: '2019-04-23 20:19:09.961',
           billable: true,
@@ -25,7 +25,7 @@ module.exports = {
         {
           quantity: '1',
           intakeDate: '2019-04-12 20:19:09.961',
-          followpDate: '2019-04-22 20:19:09.961',
+          followupDate: '2019-04-22 20:19:09.961',
           serviceDate: '2019-04-19 20:19:09.961',
           repId: '2', // Southland Rep (User)
           regionTechId: '2', // (User)
@@ -33,7 +33,7 @@ module.exports = {
           addressId: '2', // Address
           clientId: '2', // Client
           shipperId: '2', // ShipperCustomer
-          clientRef: 'dunno 2',
+          accountingRefId: 'dunno 2',
           encounterFrom: '2019-04-22 20:19:09.961',
           encounterTo: '2019-04-22 20:19:09.961',
           billable: true,
@@ -44,7 +44,7 @@ module.exports = {
         {
           quantity: '1',
           intakeDate: '2019-04-11 20:19:09.961',
-          followpDate: '2019-04-11 20:19:09.961',
+          followupDate: '2019-04-11 20:19:09.961',
           serviceDate: '2019-04-18 20:19:09.961',
           repId: '3', // Southland Rep (User)
           regionTechId: '3', // (User)
@@ -52,7 +52,7 @@ module.exports = {
           addressId: '3', // Address
           clientId: '3', // Client
           shipperId: '3', // ShipperCustomer
-          clientRef: 'dunno 3',
+          accountingRefId: 'dunno 3',
           encounterFrom: '2019-04-21 20:19:09.961',
           encounterTo: '2019-04-21 20:19:09.961',
           billable: true,

@@ -34,6 +34,7 @@ exports.login = async (email, password) => {
   const valid = await bcrypt.compare(password, user.password);
   if (!valid) return Boom.notAcceptable();
   credentials.role = user.userRole.name;
+  
   const token = jwt.sign(
     credentials, 
     JWT_KEY, 
@@ -43,5 +44,13 @@ exports.login = async (email, password) => {
     }
   )
 
-  return { token }
+  const userDetails = {
+    id: user.id,
+    userRole: {
+      id: user.userRole.id,
+      name: user.userRole.name
+    }
+  };
+
+  return { token, user: userDetails }
 }

@@ -17,22 +17,28 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
+      addressId: {
+        type: Sequelize.INTEGER
+      },
       phone1: {
         type: Sequelize.STRING
       },
       phone2: {
         type: Sequelize.STRING
       },
-      fax: {
+      email1: {
         type: Sequelize.STRING
       },
-      email: {
+      email2: {
         type: Sequelize.STRING
       },
       notes: {
         type: Sequelize.TEXT
       },
       personalMetadata: {
+        type: Sequelize.TEXT
+      },
+      directions: {
         type: Sequelize.TEXT
       },
       clientId: {

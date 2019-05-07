@@ -14,7 +14,7 @@ module.exports = {
       intakeDate: {
         type: Sequelize.DATE
       },
-      followpDate: {
+      followupDate: {
         type: Sequelize.DATE,
         type: Sequelize.DATE(3)
       },
@@ -40,7 +40,7 @@ module.exports = {
       shipperId: {
         type: Sequelize.INTEGER
       },
-      clientRef: {
+      accountingRefId: {
         type: Sequelize.STRING
       },
       encounterFrom: {

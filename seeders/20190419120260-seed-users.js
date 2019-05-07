@@ -50,19 +50,7 @@ module.exports = {
         notes:            "Cras dolor dolor, tempus non, lacinia at, iaculis quis, pede.",
         personalMetadata: "et malesuada fames ac turpis egestas.",
         role:             3
-      },
-      {
-        firstName:        "Julian",
-        lastName:         "Pierce",
-        title:            "Adjuster",
-        phone1:           "968-242-1154",
-        phone2:           "579-892-5544",
-        email:            "lectus.Nullam@pedePraesenteu.ca",
-        password:         "$2a$10$zci.MmYCbijww2MUzYpHMOO9ybhVawX1IIuz980cv8r9C7kGxvmmu", // bell
-        notes:            "semper et, lacinia",
-        personalMetadata: "Mauris quis turpis vitae purus",
-        role:             4
-      },
+      }
     ], {});
   },
 
