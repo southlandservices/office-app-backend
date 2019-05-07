@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcrypt')
 const models = require('../../models');
-const { setAttributes } = require('../utils/serviceHelpers');
+// const { setAttributes } = require('../utils/serviceHelpers');
 
 const publicAttributes = [
   'id',
@@ -15,18 +15,21 @@ const publicAttributes = [
   'notes'
 ];
 
-const privateAttributes = [
-  'personalMetaData',
+const privateAttributeSet = [
+  'personalMetadata',
   'role'
 ];
 
-const authAttributes = [
+const adminAttributeSet = [
   'id',
-  'email',
-  'password'
+  'email'
 ];
 
-const adminAttributes = publicAttributes.concat(privateAttributes);
+const authAttributeSet = ['password']
+
+const managerAttributes = publicAttributes.concat(privateAttributeSet);
+const adminAttributes = publicAttributes.concat(privateAttributeSet, adminAttributeSet);
+const authAttributes = adminAttributeSet.concat(authAttributeSet);
 
 const baseQuery = {
   attributes: publicAttributes,
@@ -56,6 +59,14 @@ const createUser = async (data) => {
   return user;
 }
 
+const setAttributes = (query, role = 'Tech') => {
+  let additionalAttributes;
+  if(role === 'Manager') { additionalAttributes = managerAttributes }
+  if(role === 'Admin') { additionalAttributes = adminAttributes }
+  if (additionalAttributes) { query.attributes = additionalAttributes; }
+  return query;
+}
+
 const updateUser = async (id, data) => {
   return models.User.update(
     { ...data },
@@ -67,12 +78,12 @@ const getUsers = async () => {
   return models.User.findAll(setAttributes(baseQuery));
 }
 
-const getUserById = async (id) => {
-  return models.User.findByPk(id, setAttributes(baseQuery));
+const getUserById = async (id, role) => {
+  return models.User.findByPk(id, setAttributes(baseQuery, role));
 }
 
-const getUser = async (query) => {
-  const parameterizedQuery = Object.assign(setAttributes(baseQuery), { where: query });
+const getUser = async (query, role) => {
+  const parameterizedQuery = Object.assign(setAttributes(baseQuery, role), { where: query });
   return models.User.findAll(parameterizedQuery);
 }
 

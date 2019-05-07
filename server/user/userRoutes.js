@@ -18,7 +18,7 @@ routes.push(
         try {
           const data = !query ?
             await service.getUsers() :
-            await service.getUser(query);
+            await service.getUser(query, role);
           return handleInitialSuccess(h, data);
         } catch (error) {
           return handleInitialFailure(h, 'Failed to retrieve user(s)');
@@ -40,7 +40,7 @@ routes.push(
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const data = await service.getUserById(id);
+          const data = await service.getUserById(id, role);
           return handleInitialSuccess(h, data);
         } catch (error) {
           return handleInitialFailure(h, `Failed to retrieve user with id: ${id}`);
@@ -79,14 +79,14 @@ routes.push(
     method: 'PUT',
     path: '/api/v1/users/{id}',
     async handler(req, h) {
-      const data = req.payload;
+      const data = JSON.parse(req.payload);
       const { id } = req.params;
       const { role } = req.auth.credentials;
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const data = await service.updateUser(id, data);
-          return handleInitialSuccess(h, data);
+          const updated = await service.updateUser(id, data);
+          return handleInitialSuccess(h, updated);
         } catch (error) {
           return handleInitialFailure(h, `Failed to update user with email: ${data.email}`);
         }

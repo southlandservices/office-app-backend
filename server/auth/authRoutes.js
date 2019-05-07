@@ -10,7 +10,7 @@ const routes = [];
 routes.push(
   {
     method: 'POST',
-    path: '/authentication',
+    path: '/api/v1/authentication',
     handler: async (req, h) => {
       const { email, password } = req.payload;
       try {

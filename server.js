@@ -20,7 +20,15 @@ const options = {
 
 exports.deployment = async () => {
   const server = new Hapi.Server({
-    port: config.get('app.port')
+    port: config.get('app.port'),
+    routes: {
+      cors: {
+        origin: ['*'],
+        headers: ['Authorization'],
+        exposedHeaders: ['Accept'],
+        additionalExposedHeaders: ['Accept']
+      }
+    }
   });
 
   try {
