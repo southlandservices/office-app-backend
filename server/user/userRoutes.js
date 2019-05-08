@@ -57,13 +57,15 @@ routes.push(
     method: 'POST',
     path: '/api/v1/users',
     async handler(req, h) {
-      const data = req.payload;
+      const data = JSON.parse(req.payload);
+      if(!data.role) { data.role = "4" }
+      delete data.id;
       const { role } = req.auth.credentials;
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const data = await service.createUser(data);
-          return handleInitialSuccess(h, data);
+          const result = await service.createUser(data);
+          return handleInitialSuccess(h, result);
         } catch (error) {
           return handleInitialFailure(error, `Failed to create user with email: ${data.email}`);
         }

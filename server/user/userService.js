@@ -43,11 +43,14 @@ const baseQuery = {
 const saltRounds = 10;
 
 const hashPassword = async (password) => {
-  bcrypt.genSalt(saltRounds, (err, salt) => {
-    bcrypt.hash(password, salt, (err, hash) => {
-      return hash;
-    })
+  const hashedPassword = await new Promise((resolve, reject) => {
+    bcrypt.hash(password, saltRounds, function (err, hash) {
+      if (err) reject(err)
+      resolve(hash)
+    });
   })
+
+  return hashedPassword
 }
 
 const createUser = async (data) => {
