@@ -21,7 +21,7 @@ routes.push(
             await service.getJob(query);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(h, 'Failed to retrieve jobs(s)');
+          return handleInitialFailure(error, 'Failed to retrieve jobs(s)');
         }
       } else {
         permissionError(h, role);

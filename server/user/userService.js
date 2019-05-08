@@ -12,12 +12,12 @@ const publicAttributes = [
   'phone1',
   'phone2',
   'email',
-  'notes'
+  'notes',
+  'role'
 ];
 
 const privateAttributeSet = [
-  'personalMetadata',
-  'role'
+  'personalMetadata'
 ];
 
 const adminAttributeSet = [

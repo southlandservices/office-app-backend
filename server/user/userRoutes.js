@@ -21,7 +21,7 @@ routes.push(
             await service.getUser(query, role);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(h, 'Failed to retrieve user(s)');
+          return handleInitialFailure(error, 'Failed to retrieve user(s)');
         }
       } else {
         permissionError(h, role);
@@ -43,7 +43,7 @@ routes.push(
           const data = await service.getUserById(id, role);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(h, `Failed to retrieve user with id: ${id}`);
+          return handleInitialFailure(error, `Failed to retrieve user with id: ${id}`);
         }
       } else {
         permissionError(h, role);
@@ -65,7 +65,7 @@ routes.push(
           const data = await service.createUser(data);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(h, `Failed to create user with email: ${data.email}`);
+          return handleInitialFailure(error, `Failed to create user with email: ${data.email}`);
         }
       } else {
         permissionError(h, role);
@@ -88,7 +88,7 @@ routes.push(
           const updated = await service.updateUser(id, data);
           return handleInitialSuccess(h, updated);
         } catch (error) {
-          return handleInitialFailure(h, `Failed to update user with email: ${data.email}`);
+          return handleInitialFailure(error, `Failed to update user with email: ${data.email}`);
         }
       } else {
         permissionError(h, role);
@@ -110,7 +110,7 @@ routes.push(
           const data = await service.deleteUser(id);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(h, `Failed to delete user with id: ${id}`);
+          return handleInitialFailure(error, `Failed to delete user with id: ${id}`);
         }
       } else {
         permissionError(h, role);

@@ -21,7 +21,7 @@ routes.push(
             await service.getClientContact(query);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(h, 'Failed to retrieve client contact(s)');
+          return handleInitialFailure(error, 'Failed to retrieve client contact(s)');
         }
       } else {
         permissionError(h, role);
@@ -43,7 +43,7 @@ routes.push(
           const data = await service.getClientContactById(id);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(h, `Failed to retrieve client with id: ${id}`);
+          return handleInitialFailure(error, `Failed to retrieve client with id: ${id}`);
         }
       } else {
         permissionError(h, role);

@@ -21,7 +21,7 @@ routes.push(
             await service.getClient(query);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(h, 'Failed to retrieve client(s)');
+          return handleInitialFailure(error, 'Failed to retrieve client(s)');
         }
       } else {
         permissionError(h, role);
@@ -43,7 +43,7 @@ routes.push(
           const data = await service.getClientById(id);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(h, `Failed to retrieve client with id: ${id}`);
+          return handleInitialFailure(error, `Failed to retrieve client with id: ${id}`);
         }
       } else {
         permissionError(h, role);
@@ -65,7 +65,7 @@ routes.push(
           const data = await service.getClientContactsByClientId(id);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(h, `Failed to retrieve client with id: ${id}`);
+          return handleInitialFailure(error, `Failed to retrieve client with id: ${id}`);
         }
       } else {
         permissionError(h, role);
@@ -87,7 +87,7 @@ routes.push(
           const data = await service.getClientContactByContactId(contactId);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(h, `Failed to retrieve client with id: ${id}`);
+          return handleInitialFailure(error, `Failed to retrieve client with id: ${id}`);
         }
       } else {
         permissionError(h, role);
