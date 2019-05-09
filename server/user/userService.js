@@ -2,6 +2,7 @@
 
 const bcrypt = require('bcrypt')
 const models = require('../../models');
+const Role = models.Role;
 // const { setAttributes } = require('../utils/serviceHelpers');
 
 const publicAttributes = [
@@ -33,11 +34,12 @@ const authAttributes = adminAttributeSet.concat(authAttributeSet);
 
 const baseQuery = {
   attributes: publicAttributes,
-  include: [{
-    model: models.Role,
-    as: 'userRole',
-    attributes: ['id', 'name']
-  }]
+  include: [Role]
+  // include: [{
+  //   model: models.Role,
+  //   as: 'userRole',
+  //   attributes: ['id', 'name']
+  // }]
 };
 
 const saltRounds = 10;

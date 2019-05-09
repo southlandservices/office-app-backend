@@ -13,7 +13,7 @@ module.exports = {
         password:         "$2a$10$RKxQRO4rS0Wf/1Jdq6RaXuLoJQx8bfPpZTlVv6zKzdxhStPVNZW22", //foo
         notes:            "nostra, per inceptos hymenaeos.",
         personalMetadata: "sed dictum eleifend, nunc risus varius",
-        role:             1
+        roleId:             1
       },
       {
         firstName:        "Guy",
@@ -25,7 +25,7 @@ module.exports = {
         password:         "$2a$10$sjOS.pSm6QdL6PeXTTuh2O8ciNA9VXRqM4HcmkDVC/Yg3sb8SlHd6", // bar
         notes:            "feugiat placerat",
         personalMetadata: "ipsum ac mi eleifend egestas.",
-        role:             4
+        roleId:             4
       },
       {
         firstName:        "Kasper",
@@ -37,7 +37,7 @@ module.exports = {
         password:         "$2a$10$hScv9qZieA4Pg8w84TIAl.cG6LhmGooVg/Psknmg5Vd3jVWBF8hFm", // baz
         notes:            "urna convallis erat,",
         personalMetadata: "ut",
-        role:             2
+        roleId:             2
       },
       {
         firstName:        "Gary",
@@ -49,7 +49,7 @@ module.exports = {
         password:         "$2a$10$pUbIWezSOQS0vWIbgn1wXeZP5jHm9E2H3kbpW4f2lj3FWqcrMrbr2", // taco
         notes:            "Cras dolor dolor, tempus non, lacinia at, iaculis quis, pede.",
         personalMetadata: "et malesuada fames ac turpis egestas.",
-        role:             3
+        roleId:             3
       }
     ], {});
   },

@@ -35,13 +35,16 @@ module.exports = {
       personalMetadata: {
         type: Sequelize.TEXT
       },
-      role: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Roles',
-          key: 'id'
-        },
-        allowNull: false
+      // role: {
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: 'Roles',
+      //     key: 'id'
+      //   },
+      //   allowNull: false
+      // },
+      roleId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

@@ -16,14 +16,9 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     notes: DataTypes.STRING,
     personalMetadata: DataTypes.STRING,
-    role: DataTypes.INTEGER
   }, {});
   User.associate = function(models) {
-    // associations can be defined here
-    models.User.hasOne(models.Role, {
-      foreignKey: 'id',
-      as: 'userRole'
-    });
+    User.belongsTo(models.Role)
   };
   return User;
 };
