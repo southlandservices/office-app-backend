@@ -2,8 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.UUID,
       primaryKey: true,
       notNull: true
     },
@@ -16,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     notes: DataTypes.STRING,
     personalMetadata: DataTypes.STRING,
+    roleId: DataTypes.INTEGER
   }, {});
   User.associate = function(models) {
     User.belongsTo(models.Role)

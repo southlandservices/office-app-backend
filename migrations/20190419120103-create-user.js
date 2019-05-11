@@ -4,9 +4,9 @@ module.exports = {
     return queryInterface.createTable('Users', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4
       },
       firstName: {
         type: Sequelize.STRING
@@ -35,14 +35,6 @@ module.exports = {
       personalMetadata: {
         type: Sequelize.TEXT
       },
-      // role: {
-      //   type: Sequelize.INTEGER,
-      //   references: {
-      //     model: 'Roles',
-      //     key: 'id'
-      //   },
-      //   allowNull: false
-      // },
       roleId: {
         type: Sequelize.INTEGER
       },

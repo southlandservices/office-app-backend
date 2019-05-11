@@ -3,7 +3,6 @@
 const bcrypt = require('bcrypt')
 const models = require('../../models');
 const Role = models.Role;
-// const { setAttributes } = require('../utils/serviceHelpers');
 
 const publicAttributes = [
   'id',
@@ -14,7 +13,7 @@ const publicAttributes = [
   'phone2',
   'email',
   'notes',
-  'role'
+  'roleId'
 ];
 
 const privateAttributeSet = [
@@ -34,12 +33,10 @@ const authAttributes = adminAttributeSet.concat(authAttributeSet);
 
 const baseQuery = {
   attributes: publicAttributes,
-  include: [Role]
-  // include: [{
-  //   model: models.Role,
-  //   as: 'userRole',
-  //   attributes: ['id', 'name']
-  // }]
+  include: [{
+    model: Role,
+    attributes: ['id', 'name']
+  }]
 };
 
 const saltRounds = 10;
@@ -80,20 +77,20 @@ const updateUser = async (id, data) => {
 }
 
 const getUsers = async () => {
-  return models.User.findAll(setAttributes(baseQuery));
+  return models.User.findAll(setAttributes({...baseQuery}));
 }
 
 const getUserById = async (id, role) => {
-  return models.User.findByPk(id, setAttributes(baseQuery, role));
+  return models.User.findByPk(id, setAttributes({...baseQuery}, role));
 }
 
 const getUser = async (query, role) => {
-  const parameterizedQuery = Object.assign(setAttributes(baseQuery, role), { where: query });
+  const parameterizedQuery = Object.assign(setAttributes({...baseQuery}, role), { where: query });
   return models.User.findAll(parameterizedQuery);
 }
 
 const getUserForAuth = async(query) => {
-  const parameterizedQuery = Object.assign(baseQuery, { attributes: authAttributes, where: query });
+  const parameterizedQuery = Object.assign({...baseQuery}, { attributes: authAttributes, where: query });
   const user = await models.User.findOne(parameterizedQuery);
   return user.dataValues;
 }

@@ -13,12 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     clientId: DataTypes.INTEGER
   }, {});
   ClientContact.associate = function(models) {
-    // associations can be defined here
-    models.ClientContact.hasOne(models.Client, {
-      foreignKey: 'id',
-      sourceKey: 'clientId',
-      as: 'client'
-    })
+    ClientContact.belongsTo(models.Client)
   };
   return ClientContact;
 };
