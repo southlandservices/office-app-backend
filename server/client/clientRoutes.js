@@ -16,9 +16,9 @@ routes.push(
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const data = !query ?
+          const data = (!query || _.isEmpty(query)) ?
             await service.getClients() :
-            await service.getClient(query);
+            await service.getClient(query, role);
           return handleInitialSuccess(h, data);
         } catch (error) {
           return handleInitialFailure(error, 'Failed to retrieve client(s)');
@@ -40,7 +40,7 @@ routes.push(
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const data = await service.getClientById(id);
+          const data = await service.getClientById(id, role);
           return handleInitialSuccess(h, data);
         } catch (error) {
           return handleInitialFailure(error, `Failed to retrieve client with id: ${id}`);

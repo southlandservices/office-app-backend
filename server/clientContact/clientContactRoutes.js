@@ -16,9 +16,9 @@ routes.push(
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const data = !query ?
+          const data = (!query || _.isEmpty(query)) ?
             await service.getClientContacts() :
-            await service.getClientContact(query);
+            await service.getClientContact(query, role);
           return handleInitialSuccess(h, data);
         } catch (error) {
           return handleInitialFailure(error, 'Failed to retrieve client contact(s)');

@@ -1,6 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const ClientContact = sequelize.define('ClientContact', {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      notNull: true
+    },
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     title: DataTypes.STRING,
