@@ -1,12 +1,12 @@
 'use strict';
 
-const uuidv4 = require('uuid/v4');
+// const uuidv4 = require('uuid/v4');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Users', [
       {
-        id: uuidv4(),
+        // id: uuidv4(),
         firstName:        "Ferdinand",
         lastName:         "Gregory",
         title:            "Adjuster",
@@ -19,7 +19,7 @@ module.exports = {
         roleId:             1
       },
       {
-        id: uuidv4(),
+        // id: uuidv4(),
         firstName:        "Guy",
         lastName:         "Lott",
         title:            "Adjuster",
@@ -32,7 +32,7 @@ module.exports = {
         roleId:             4
       },
       {
-        id: uuidv4(),
+        // id: uuidv4(),
         firstName:        "Kasper",
         lastName:         "Ballard",
         title:            "Adjuster",
@@ -45,7 +45,7 @@ module.exports = {
         roleId:             2
       },
       {
-        id: uuidv4(),
+        // id: uuidv4(),
         firstName:        "Gary",
         lastName:         "May",
         title:            "Adjuster",
