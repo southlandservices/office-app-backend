@@ -35,6 +35,16 @@ const baseQuery = {
       model: models.Client,
       as: 'client',
       attributes: ['id', 'name']
+    },
+    {
+      model: models.User,
+      as: 'southlandRep',
+      attributes: ['id', 'firstName', 'lastName']
+    },
+    {
+      model: models.ShipperCustomer,
+      as: 'shipperCustomer',
+      attributes: ['id', 'firstName', 'lastName']
     }
   ]
 };

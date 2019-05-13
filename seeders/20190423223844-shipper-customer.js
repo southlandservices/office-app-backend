@@ -18,8 +18,8 @@ module.exports = {
         clientId: 1
       },
       {
-        firstName: "Guy",
-        lastName: "Lott",
+        firstName: "Taco",
+        lastName: "Dan",
         title: "Mr.",
         phone1: "692-973-2775",
         phone2: "957-941-4841",
@@ -32,8 +32,8 @@ module.exports = {
         clientId: 4
       },
       {
-        firstName: "Kasper",
-        lastName: "Ballard",
+        firstName: "Bob",
+        lastName: "Loblaw",
         title: "Mr.",
         phone1: "556-851-0655",
         phone2: "758-632-4713",
@@ -46,7 +46,7 @@ module.exports = {
         clientId: 2
       },
       {
-        firstName: "Gary",
+        firstName: "Brian",
         lastName: "May",
         title: "Mr.",
         phone1: "781-848-6254",

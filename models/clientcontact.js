@@ -2,7 +2,8 @@
 module.exports = (sequelize, DataTypes) => {
   const ClientContact = sequelize.define('ClientContact', {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
       notNull: true
     },

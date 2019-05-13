@@ -58,8 +58,8 @@ routes.push(
     path: '/api/v1/users',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
-      // if(!data.role) { data.role = "4" }
-      // delete data.id;
+      if(!data.role) { data.role = "4" }
+      delete data.id;
       const { role } = req.auth.credentials;
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
