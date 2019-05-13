@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcrypt')
 const models = require('../../models');
-const { setAttributes } = require('../utils/serviceHelpers');
+// const { setAttributes } = require('../utils/serviceHelpers');
 
 const publicAttributes = [
   'id',
@@ -48,6 +48,14 @@ const baseQuery = {
     }
   ]
 };
+
+const setAttributes = (query, role) => {
+  let additionalAttributes;
+  if (role === 'Manager') { additionalAttributes = managerAttributes }
+  if (role === 'Admin') { additionalAttributes = adminAttributes }
+  if (additionalAttributes) { query.attributes = additionalAttributes; }
+  return query;
+}
 
 const getJobs = async () => {
   return models.Jobs.findAll(setAttributes(baseQuery));

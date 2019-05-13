@@ -1,4 +1,4 @@
-const setAttributes = (q, role = 'Tech') => {
+const setAttributes = (q, role) => {
   if (role === 'Admin') {
     q.attributes = adminAttributes;
   }

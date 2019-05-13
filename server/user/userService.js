@@ -61,7 +61,7 @@ const createUser = async (data) => {
   return user;
 }
 
-const setAttributes = (query, role = 'Tech') => {
+const setAttributes = (query, role) => {
   let additionalAttributes;
   if (role === 'Manager') { additionalAttributes = managerAttributes }
   if (role === 'Admin') { additionalAttributes = adminAttributes }
