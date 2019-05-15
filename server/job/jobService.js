@@ -58,15 +58,15 @@ const setAttributes = (query, role) => {
 }
 
 const getJobs = async () => {
-  return models.Jobs.findAll(setAttributes(baseQuery));
+  return models.Jobs.findAll(setAttributes({...baseQuery}));
 }
 
-const getJobById = async (id) => {
-  return models.Jobs.findByPk(id, setAttributes(baseQuery));
+const getJobById = async (id, role) => {
+  return models.Job.findByPk(id, setAttributes({...baseQuery}, role));
 }
 
-const getJob = async (query) => {
-  const parameterizedQuery = Object.assign(setAttributes(baseQuery), { where: query });
+const getJob = async (query, role) => {
+  const parameterizedQuery = Object.assign(setAttributes({...baseQuery}, role), { where: query });
   return models.Job.findAll(parameterizedQuery);
 }
 

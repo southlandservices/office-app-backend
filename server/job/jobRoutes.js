@@ -30,6 +30,28 @@ routes.push(
     config: {
       tags: ['api', 'v1', 'jobs']
     }
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/jobs/{id}',
+    async handler(req, h) {
+      const { id } = req.params;
+      const { role } = req.auth.credentials;
+      const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
+      if (checkPermission(req, allowedRoles)) {
+        try {
+          const data = await service.getJobById(id, role);
+          return handleInitialSuccess(h, data);
+        } catch (error) {
+          return handleInitialFailure(error, `Failed to retrieve job with id: ${id}`);
+        }
+      } else {
+        permissionError(h, role);
+      }
+    },
+    config: {
+      tags: ['api', 'v1', 'job']
+    }
   }
 )
 
