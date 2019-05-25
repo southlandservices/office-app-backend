@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       notNull: true
     },
     note: DataTypes.TEXT,
+    isAdmin: DataTypes.BOOLEAN,
     userId: DataTypes.INTEGER,
     submitterId: DataTypes.INTEGER
   }, {});

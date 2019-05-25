@@ -8,7 +8,8 @@ const publicAttributes = [
   'userId',
   'submitterId',
   'createdAt',
-  'updatedAt'
+  'updatedAt',
+  'isAdmin'
 ];
 
 const baseQuery = {
@@ -27,7 +28,20 @@ const baseQuery = {
   ]
 };
 
-const getUsernoteByUser = async (userId) => {
+const getUsernoteByUser = async (userId, role) => {
+  if(role === 'Admin') {
+    return getAllUserNotesByUser(userId);
+  } else {
+    return getPublicUserNotesByUser(userId);
+  }
+}
+
+const getPublicUserNotesByUser = async (userId) => {
+  const query = Object.assign(baseQuery, { where: { userId, isAdmin: false } });
+  return models.UserNote.findAll(query);
+}
+
+const getAllUserNotesByUser = async(userId) => {
   const query = Object.assign(baseQuery, { where: { userId } });
   return models.UserNote.findAll(query);
 }
