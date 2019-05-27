@@ -55,8 +55,29 @@ const getUsernoteById = async (id) => {
   return models.UserNote.findByPk(id, baseQuery);
 }
 
+const createUsernote = async (data) => {
+  const note = await models.UserNote.create(data);
+  return note;
+}
+
+const updateUsernote = async (id, data) => {
+  const { note } = data;
+  const updated = await models.UserNote.update(
+    { note },
+    { where: { id } }
+  );
+  return await getUsernoteById(id);
+}
+
+const deleteUsernote = async (userId, id) => {
+  return models.UserNote.destroy({ where: { id, userId } });
+}
+
 module.exports = {
   getUsernoteByUser,
   getUsernoteBySubmitter,
-  getUsernoteById
+  getUsernoteById,
+  createUsernote,
+  updateUsernote,
+  deleteUsernote
 }

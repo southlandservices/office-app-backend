@@ -73,6 +73,74 @@ routes.push(
       tags: ['api', 'v1', 'usernote']
     }
   },
+  {
+    method: 'POST',
+    path: '/api/v1/usernotes',
+    async handler(req, h) {
+      const data = JSON.parse(req.payload);
+      delete data.id;
+      const { role } = req.auth.credentials;
+      const allowedRoles = ['Admin'];
+      if (checkPermission(req, allowedRoles)) {
+        try {
+          const result = await service.createUsernote(data);
+          return handleInitialSuccess(h, result);
+        } catch (error) {
+          return handleInitialFailure(error, `Failed to create usernote`);
+        }
+      } else {
+        permissionError(h, role);
+      }
+    },
+    config: {
+      tags: ['api', 'v1', 'users', 'create']
+    }
+  },
+  {
+    method: 'PUT',
+    path: '/api/v1/usernotes/{id}',
+    async handler(req, h) {
+      const data = JSON.parse(req.payload);
+      const { id } = req.params;
+      const { role } = req.auth.credentials;
+      const allowedRoles = ['Admin'];
+      if (checkPermission(req, allowedRoles)) {
+        try {
+          const updated = await service.updateUsernote(id, data);
+          return handleInitialSuccess(h, updated);
+        } catch (error) {
+          return handleInitialFailure(error, `Failed to update usernote with id: ${id}`);
+        }
+      } else {
+        permissionError(h, role);
+      }
+    },
+    config: {
+      tags: ['api', 'v1', 'users', 'update']
+    }
+  },
+  {
+    method: 'DELETE',
+    path: '/api/v1/usernotes/{id}',
+    async handler(req, h) {
+      const { id } = req.params;
+      const { role } = req.auth.credentials;
+      const allowedRoles = ['Admin'];
+      if (checkPermission(req, allowedRoles)) {
+        try {
+          const data = await service.deleteUsernote(id);
+          return handleInitialSuccess(h, data);
+        } catch (error) {
+          return handleInitialFailure(error, `Failed to delete usernote with id: ${id}`);
+        }
+      } else {
+        permissionError(h, role);
+      }
+    },
+    config: {
+      tags: ['api', 'v1', 'users', 'delete']
+    }
+  }
 )
 
 module.exports = _.flattenDeep(routes);
