@@ -2,6 +2,7 @@
 
 const _ = require('lodash')
 const service = require('./jobService');
+const notes = require('../jobnote/jobnoteService');
 const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
 
 const routes = [];
@@ -52,7 +53,29 @@ routes.push(
     config: {
       tags: ['api', 'v1', 'job']
     }
-  }
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/jobs/{id}/notes',
+    async handler(req, h) {
+      const { id } = req.params;
+      const { role } = req.auth.credentials;
+      const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
+      if (checkPermission(req, allowedRoles)) {
+        try {
+          const data = await notes.getJobnoteByJob(id, role);
+          return handleInitialSuccess(h, data);
+        } catch (error) {
+          return handleInitialFailure(error, `Failed to retrieve notes for job with id: ${id}`);
+        }
+      } else {
+        permissionError(h, role);
+      }
+    },
+    config: {
+      tags: ['api', 'v1', 'job', 'jobnotes']
+    }
+  },
 )
 
 module.exports = _.flattenDeep(routes);
