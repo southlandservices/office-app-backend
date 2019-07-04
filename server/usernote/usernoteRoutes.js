@@ -79,11 +79,14 @@ routes.push(
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       delete data.id;
-      const { role } = req.auth.credentials;
+      const { role, userId } = req.auth.credentials;
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const result = await service.createUsernote(data);
+          const updatedData = Object.assign({}, data, {
+            submitterId: userId
+          });
+          const result = await service.createUsernote(updatedData);
           return handleInitialSuccess(h, result);
         } catch (error) {
           return handleInitialFailure(error, `Failed to create usernote`);
