@@ -60,10 +60,10 @@ const createUsernote = async (data) => {
   return note;
 }
 
-const updateUsernote = async (id, data) => {
+const updateUsernote = async (id, data, submitterId) => {
   const { note } = data;
-  const updated = await models.UserNote.update(
-    { note },
+  await models.UserNote.update(
+    { note, submitterId },
     { where: { id } }
   );
   return await getUsernoteById(id);

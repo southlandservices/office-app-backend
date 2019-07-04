@@ -93,7 +93,7 @@ routes.push(
       }
     },
     config: {
-      tags: ['api', 'v1', 'users', 'create']
+      tags: ['api', 'v1', 'usernote', 'create']
     }
   },
   {
@@ -102,11 +102,11 @@ routes.push(
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const { role, userId } = req.auth.credentials;
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const updated = await service.updateUsernote(id, data);
+          const updated = await service.updateUsernote(id, data, userId);
           return handleInitialSuccess(h, updated);
         } catch (error) {
           return handleInitialFailure(error, `Failed to update usernote with id: ${id}`);
@@ -116,7 +116,7 @@ routes.push(
       }
     },
     config: {
-      tags: ['api', 'v1', 'users', 'update']
+      tags: ['api', 'v1', 'usernote', 'update']
     }
   },
   {
@@ -138,7 +138,7 @@ routes.push(
       }
     },
     config: {
-      tags: ['api', 'v1', 'users', 'delete']
+      tags: ['api', 'v1', 'usernote', 'delete']
     }
   }
 )
