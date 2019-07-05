@@ -102,15 +102,15 @@ routes.push(
   },
   {
     method: 'PUT',
-    path: '/api/v1/users/{id}/note',
+    path: '/api/v1/users/{id}/note/{noteId}',
     async handler(req, h) {
       const data = req.payload; // const data = JSON.parse(req.payload);
-      const { id } = req.params;
+      const { id, noteId } = req.params;
       const { role } = req.auth.credentials;
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const updated = await notes.updateUsernote(id, data);
+          const updated = await notes.updateUsernote(noteId, data);
           return handleInitialSuccess(h, updated);
         } catch (error) {
           return handleInitialFailure(error, `Failed to update usernote with id: ${id}`);
