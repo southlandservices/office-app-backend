@@ -6,11 +6,20 @@ const models = require('../../models');
 
 const publicAttributes = [
   'id',
+  'quantity',
   'intakeDate',
   'followupDate',
   'serviceDate',
+  'repId',
+  'regionTechId',
+  'serviceStatusId',
+  'addressId',
   'clientId',
   'shipperId',
+  'accountingRefId',
+  'encounterFrom',
+  'encounterTo',
+  'billable',
   'cost',
   'net'
 ];
