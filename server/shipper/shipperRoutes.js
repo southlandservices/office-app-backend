@@ -53,6 +53,29 @@ routes.push(
       tags: ['api', 'v1', 'shipper']
     }
   },
+  {
+    method: 'POST',
+    path: '/api/v1/shippers',
+    async handler(req, h) {
+      const data = JSON.parse(req.payload);
+      delete data.id;
+      const { role } = req.auth.credentials;
+      const allowedRoles = ['Admin'];
+      if (checkPermission(req, allowedRoles)) {
+        try {
+          const result = await service.createShipper(data);
+          return handleInitialSuccess(h, result);
+        } catch (error) {
+          return handleInitialFailure(error, `Failed to create shipper with first name: ${data.firstName} and last name ${data.lastName}`);
+        }
+      } else {
+        permissionError(h, role);
+      }
+    },
+    config: {
+      tags: ['api', 'v1', 'shippers', 'create']
+    }
+  },
 )
 
 module.exports = _.flattenDeep(routes);

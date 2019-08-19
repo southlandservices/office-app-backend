@@ -79,8 +79,14 @@ const getJob = async (query, role) => {
   return models.Job.findAll(parameterizedQuery);
 }
 
+const createJob = async (data) => {
+  const job = await models.Job.create(data);
+  return job;
+}
+
 module.exports = {
   getJobs,
   getJob,
-  getJobById
+  getJobById,
+  createJob
 }
