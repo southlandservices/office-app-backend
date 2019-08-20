@@ -39,7 +39,25 @@ const getJobItemById = async(id) => {
   return jobItem;
 }
 
+const createJobItem = async (data) => {
+  const jobItem = await models.JobItem.create(data);
+  return jobItem;
+}
+
+const updateJobItem = async(id, data) => {
+  const { jobItem } = data;
+  await models.JobItem.update(jobItem, { where: { id } });
+  return await getJobItemById(id);
+}
+
+const deleteJobItem = async (id) => {
+  return models.JobItem.destroy({ where: { id } });
+}
+
 module.exports = {
   getJobItemsByJobId,
-  getJobItemById
+  getJobItemById,
+  createJobItem,
+  updateJobItem,
+  deleteJobItem
 }
