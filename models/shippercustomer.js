@@ -25,7 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id',
       sourceKey: 'clientId',
       as: 'client'
-    })
+    });
+    models.ShipperCustomer.hasMany(models.Job, {
+      foreignKey: 'shipperId',
+      sourceKey: 'id'
+    });
   };
   return ShipperCustomer;
 };

@@ -23,21 +23,33 @@ const adminAttributeSet = ['personalMetadata'];
 
 const adminAttributes = publicAttributes.concat(adminAttributeSet);
 
+const baseInclude = [
+  {
+    model: models.Address,
+    as: 'address',
+    attributes: ['id', 'address1', 'address2', 'city', 'state', 'zip']
+  },
+  {
+    model: models.Client,
+    as: 'client',
+    attributes: ['id', 'name']
+  },
+];
+
+const fullInclude = baseInclude.slice();
+fullInclude.push({
+  model: models.Job,
+  attributes: ['id']
+});
+
 const baseQuery = {
   attributes: publicAttributes,
-  include: [
-    {
-      model: models.Address,
-      as: 'address',
-      attributes: ['id', 'address1', 'address2', 'city', 'state', 'zip']
-    },
-    {
-      model: models.Client,
-      as: 'client',
-      attributes: ['id', 'name']
-    },
-  ]
+  include: baseInclude
 }
+
+const fullQuery = Object.assign(baseQuery, {
+  include: fullInclude
+});
 
 const setAttributes = (query, role) => {
   let additionalAttributes;
@@ -56,7 +68,7 @@ const getShipperById = async (id, role) => {
 }
 
 const getShipper = async (query, role) => {
-  const parameterizedQuery = Object.assign(setAttributes({...baseQuery}, role), { where: query });
+  const parameterizedQuery = Object.assign(setAttributes({...fullQuery}, role), { where: query });
   return models.ShipperCustomer.findAll(parameterizedQuery);
 }
 
