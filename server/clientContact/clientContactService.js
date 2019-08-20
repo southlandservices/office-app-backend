@@ -1,7 +1,7 @@
 'use strict';
 
 const models = require('../../models');
-const { setAttributes } = require('../utils/serviceHelpers');
+const Client = models.Client;
 
 const publicAttributes = [
   'id',
@@ -15,34 +15,47 @@ const publicAttributes = [
   'notes'
 ];
 
-const privateAttributes = [];
+const privateAttributeSet = [];
 
-const adminAttributes = publicAttributes.concat(privateAttributes);
+const adminAttributeSet = [
+  'personalMetadata'
+]
+
+const privateAttributes = publicAttributes.concat(privateAttributeSet);
+const managerAttributes = publicAttributes.concat(privateAttributeSet);
+const adminAttributes = publicAttributes.concat(privateAttributeSet, adminAttributeSet);
 
 const baseQuery = {
   attributes: publicAttributes,
   include: [{
-    model: models.Client,
-    as: 'client',
+    model: Client,
     attributes: ['id', 'name']
   }]
 };
 
-const getClientContacts = async () => {
-  return models.ClientContact.findAll(setAttributes(baseQuery));
+const setAttributes = (query, role) => {
+  let additionalAttributes;
+  if (role === 'Manager') { additionalAttributes = managerAttributes }
+  if (role === 'Admin') { additionalAttributes = adminAttributes }
+  if (additionalAttributes) { query.attributes = additionalAttributes; }
+  return query;
 }
 
-const getClientContact = async (query) => {
-  const parameterizedQuery = Object.assign(baseQuery, { where: query });
+const getClientContacts = async () => {
+  return models.ClientContact.findAll(setAttributes({...baseQuery}));
+}
+
+const getClientContact = async (query, role) => {
+  const parameterizedQuery = Object.assign(setAttributes({...baseQuery}, role), { where: query });
   return models.ClientContact.findAll(parameterizedQuery);
 }
 
-const getClientContactById = async (id) => {
-  return models.ClientContact.findByPk(id, setAttributes(baseQuery));
+const getClientContactById = async (id, role) => {
+  return models.ClientContact.findByPk(id, setAttributes({...baseQuery}, role));
 }
 
 const getClientContactsByClientId = async (clientId) => {
-  const parameterizedQuery = Object.assign(setAttributes(baseQuery), { where: { clientId } });
+  const parameterizedQuery = Object.assign(setAttributes({...baseQuery}), { where: { clientId } });
   return models.ClientContact.findAll(setAttributes(parameterizedQuery));
 }
 

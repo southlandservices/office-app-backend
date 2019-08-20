@@ -1,10 +1,12 @@
+const logger = require('./logger')
+
 const handleInitialSuccess = (h, data) => {
   return !data ?
     boom.notFound() :
     h.response({ data });
 }
 
-const handleInitialFailure = (h, errorMessage) => {
+const handleInitialFailure = (error, errorMessage) => {
   !error.logged && logger.error(error, errorMessage)
   return h.response(boom.boomify(error, { statusCode: httpStatus.INTERNAL_SERVER_ERROR, message: errorMessage }))
 }

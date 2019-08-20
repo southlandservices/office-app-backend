@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcrypt')
 const models = require('../../models');
-// const { setAttributes } = require('../utils/serviceHelpers');
+const Role = models.Role;
 
 const publicAttributes = [
   'id',
@@ -12,12 +12,12 @@ const publicAttributes = [
   'phone1',
   'phone2',
   'email',
-  'notes'
+  'notes',
+  'roleId'
 ];
 
 const privateAttributeSet = [
-  'personalMetadata',
-  'role'
+  'personalMetadata'
 ];
 
 const adminAttributeSet = [
@@ -34,8 +34,7 @@ const authAttributes = adminAttributeSet.concat(authAttributeSet);
 const baseQuery = {
   attributes: publicAttributes,
   include: [{
-    model: models.Role,
-    as: 'userRole',
+    model: Role,
     attributes: ['id', 'name']
   }]
 };
@@ -43,11 +42,14 @@ const baseQuery = {
 const saltRounds = 10;
 
 const hashPassword = async (password) => {
-  bcrypt.genSalt(saltRounds, (err, salt) => {
-    bcrypt.hash(password, salt, (err, hash) => {
-      return hash;
-    })
+  const hashedPassword = await new Promise((resolve, reject) => {
+    bcrypt.hash(password, saltRounds, function (err, hash) {
+      if (err) reject(err)
+      resolve(hash)
+    });
   })
+
+  return hashedPassword
 }
 
 const createUser = async (data) => {
@@ -59,7 +61,7 @@ const createUser = async (data) => {
   return user;
 }
 
-const setAttributes = (query, role = 'Tech') => {
+const setAttributes = (query, role) => {
   let additionalAttributes;
   if (role === 'Manager') { additionalAttributes = managerAttributes }
   if (role === 'Admin') { additionalAttributes = adminAttributes }
@@ -75,20 +77,20 @@ const updateUser = async (id, data) => {
 }
 
 const getUsers = async () => {
-  return models.User.findAll(setAttributes(baseQuery));
+  return models.User.findAll(setAttributes({...baseQuery}));
 }
 
 const getUserById = async (id, role) => {
-  return models.User.findByPk(id, setAttributes(baseQuery, role));
+  return models.User.findByPk(id, setAttributes({...baseQuery}, role));
 }
 
 const getUser = async (query, role) => {
-  const parameterizedQuery = Object.assign(setAttributes(baseQuery, role), { where: query });
+  const parameterizedQuery = Object.assign(setAttributes({...baseQuery}, role), { where: query });
   return models.User.findAll(parameterizedQuery);
 }
 
 const getUserForAuth = async(query) => {
-  const parameterizedQuery = Object.assign(baseQuery, { attributes: authAttributes, where: query });
+  const parameterizedQuery = Object.assign({...baseQuery}, { attributes: authAttributes, where: query });
   const user = await models.User.findOne(parameterizedQuery);
   return user.dataValues;
 }

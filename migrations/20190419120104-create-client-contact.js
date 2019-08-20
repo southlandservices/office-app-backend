@@ -36,12 +36,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       clientId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Clients',
-          key: 'id'
-        },
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

@@ -17,7 +17,7 @@ routes.push(
         const authenticated = await login(email, password);
         return handleInitialSuccess(h, authenticated);
       } catch (error) {
-        return handleInitialFailure(h, 'Failed to authenticate');
+        return handleInitialFailure(error, 'Failed to authenticate');
       }
     },
     config: { 

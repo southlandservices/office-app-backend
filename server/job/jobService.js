@@ -2,15 +2,24 @@
 
 const bcrypt = require('bcrypt')
 const models = require('../../models');
-const { setAttributes } = require('../utils/serviceHelpers');
+// const { setAttributes } = require('../utils/serviceHelpers');
 
 const publicAttributes = [
   'id',
+  'quantity',
   'intakeDate',
   'followupDate',
   'serviceDate',
+  'repId',
+  'regionTechId',
+  'serviceStatusId',
+  'addressId',
   'clientId',
   'shipperId',
+  'accountingRefId',
+  'encounterFrom',
+  'encounterTo',
+  'billable',
   'cost',
   'net'
 ];
@@ -35,25 +44,49 @@ const baseQuery = {
       model: models.Client,
       as: 'client',
       attributes: ['id', 'name']
+    },
+    {
+      model: models.User,
+      as: 'southlandRep',
+      attributes: ['id', 'firstName', 'lastName']
+    },
+    {
+      model: models.ShipperCustomer,
+      as: 'shipperCustomer',
+      attributes: ['id', 'firstName', 'lastName']
     }
   ]
 };
 
+const setAttributes = (query, role) => {
+  let additionalAttributes;
+  if (role === 'Manager') { additionalAttributes = managerAttributes }
+  if (role === 'Admin') { additionalAttributes = adminAttributes }
+  if (additionalAttributes) { query.attributes = additionalAttributes; }
+  return query;
+}
+
 const getJobs = async () => {
-  return models.Jobs.findAll(setAttributes(baseQuery));
+  return models.Jobs.findAll(setAttributes({...baseQuery}));
 }
 
-const getJobById = async (id) => {
-  return models.Jobs.findByPk(id, setAttributes(baseQuery));
+const getJobById = async (id, role) => {
+  return models.Job.findByPk(id, setAttributes({...baseQuery}, role));
 }
 
-const getJob = async (query) => {
-  const parameterizedQuery = Object.assign(setAttributes(baseQuery), { where: query });
+const getJob = async (query, role) => {
+  const parameterizedQuery = Object.assign(setAttributes({...baseQuery}, role), { where: query });
   return models.Job.findAll(parameterizedQuery);
+}
+
+const createJob = async (data) => {
+  const job = await models.Job.create(data);
+  return job;
 }
 
 module.exports = {
   getJobs,
   getJob,
-  getJobById
+  getJobById,
+  createJob
 }

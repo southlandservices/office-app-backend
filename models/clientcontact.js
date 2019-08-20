@@ -1,6 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const ClientContact = sequelize.define('ClientContact', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      notNull: true
+    },
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     title: DataTypes.STRING,
@@ -13,12 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     clientId: DataTypes.INTEGER
   }, {});
   ClientContact.associate = function(models) {
-    // associations can be defined here
-    models.ClientContact.hasOne(models.Client, {
-      foreignKey: 'id',
-      sourceKey: 'clientId',
-      as: 'client'
-    })
+    ClientContact.belongsTo(models.Client)
   };
   return ClientContact;
 };

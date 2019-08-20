@@ -1,41 +1,47 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('JobItems', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
+      inventoryNumber: {
         type: Sequelize.STRING
       },
-      lastName: {
+      quantity: {
+        type: Sequelize.INTEGER
+      },
+      itemCode: {
         type: Sequelize.STRING
       },
-      title: {
+      lossCode: {
         type: Sequelize.STRING
       },
-      phone1: {
+      purchaseLocation: {
         type: Sequelize.STRING
       },
-      phone2: {
-        type: Sequelize.STRING
+      purchaseCost: {
+        type: Sequelize.FLOAT
       },
-      email: {
-        type: Sequelize.STRING
+      replacementCost: {
+        type: Sequelize.FLOAT
       },
-      password: {
-        type: Sequelize.STRING
+      claimAmount: {
+        type: Sequelize.FLOAT
       },
-      notes: {
+      additionalDescription: {
         type: Sequelize.TEXT
       },
-      personalMetadata: {
+      comments: {
         type: Sequelize.TEXT
       },
-      roleId: {
+      jobId: {
+        type: Sequelize.INTEGER
+      },
+      submitterId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -51,6 +57,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('JobItems');
   }
 };

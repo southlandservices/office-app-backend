@@ -1,8 +1,7 @@
 'use strict';
 
 const _ = require('lodash')
-const service = require('./jobService');
-const notes = require('../jobnote/jobnoteService');
+const service = require('./shipperService');
 const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
 
 const routes = [];
@@ -10,7 +9,7 @@ const routes = [];
 routes.push(
   {
     method: 'GET',
-    path: '/api/v1/jobs',
+    path: '/api/v1/shippers',
     async handler(req, h) {
       const { query } = req;
       const { role } = req.auth.credentials;
@@ -18,67 +17,45 @@ routes.push(
       if (checkPermission(req, allowedRoles)) {
         try {
           const data = !query ?
-            await service.getJobs() :
-            await service.getJob(query);
+            await service.getShippers() :
+            await service.getShipper(query, role);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(error, 'Failed to retrieve jobs(s)');
+          return handleInitialFailure(error, 'Failed to retrieve shipper(s)');
         }
       } else {
         permissionError(h, role);
       }
     },
     config: {
-      tags: ['api', 'v1', 'jobs']
+      tags: ['api', 'v1', 'shippers']
     }
   },
   {
     method: 'GET',
-    path: '/api/v1/jobs/{id}',
+    path: '/api/v1/shippers/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const data = await service.getJobById(id, role);
+          const data = await service.getShipperById(id, role);
           return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(error, `Failed to retrieve job with id: ${id}`);
+          return handleInitialFailure(error, `Failed to retrieve shipper with id: ${id}`);
         }
       } else {
         permissionError(h, role);
       }
     },
     config: {
-      tags: ['api', 'v1', 'job']
-    }
-  },
-  {
-    method: 'GET',
-    path: '/api/v1/jobs/{id}/notes',
-    async handler(req, h) {
-      const { id } = req.params;
-      const { role } = req.auth.credentials;
-      const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
-        try {
-          const data = await notes.getJobnoteByJob(id, role);
-          return handleInitialSuccess(h, data);
-        } catch (error) {
-          return handleInitialFailure(error, `Failed to retrieve notes for job with id: ${id}`);
-        }
-      } else {
-        permissionError(h, role);
-      }
-    },
-    config: {
-      tags: ['api', 'v1', 'job', 'jobnotes']
+      tags: ['api', 'v1', 'shipper']
     }
   },
   {
     method: 'POST',
-    path: '/api/v1/jobs',
+    path: '/api/v1/shippers',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       delete data.id;
@@ -86,17 +63,17 @@ routes.push(
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const result = await service.createJob(data);
+          const result = await service.createShipper(data);
           return handleInitialSuccess(h, result);
         } catch (error) {
-          return handleInitialFailure(error, `Failed to create job`);
+          return handleInitialFailure(error, `Failed to create shipper with first name: ${data.firstName} and last name ${data.lastName}`);
         }
       } else {
         permissionError(h, role);
       }
     },
     config: {
-      tags: ['api', 'v1', 'jobs', 'create']
+      tags: ['api', 'v1', 'shippers', 'create']
     }
   },
 )
