@@ -60,8 +60,14 @@ const getShipper = async (query, role) => {
   return models.ShipperCustomer.findAll(parameterizedQuery);
 }
 
+const createShipper = async(data) => {
+  const shipper = await models.ShipperCustomer.create(data);
+  return shipper;
+}
+
 module.exports = {
   getShippers,
   getShipper,
-  getShipperById
+  getShipperById,
+  createShipper
 }

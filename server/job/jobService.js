@@ -6,11 +6,20 @@ const models = require('../../models');
 
 const publicAttributes = [
   'id',
+  'quantity',
   'intakeDate',
   'followupDate',
   'serviceDate',
+  'repId',
+  'regionTechId',
+  'serviceStatusId',
+  'addressId',
   'clientId',
   'shipperId',
+  'accountingRefId',
+  'encounterFrom',
+  'encounterTo',
+  'billable',
   'cost',
   'net'
 ];
@@ -70,8 +79,14 @@ const getJob = async (query, role) => {
   return models.Job.findAll(parameterizedQuery);
 }
 
+const createJob = async (data) => {
+  const job = await models.Job.create(data);
+  return job;
+}
+
 module.exports = {
   getJobs,
   getJob,
-  getJobById
+  getJobById,
+  createJob
 }

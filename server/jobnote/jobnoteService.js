@@ -55,8 +55,29 @@ const getJobnoteById = async (id) => {
   return models.JobNote.findByPk(id, baseQuery);
 }
 
+const createJobnote = async (data) => {
+  const note = await models.JobNote.create(data);
+  return note;
+}
+
+const updateJobnote = async (id, data, submitterId) => {
+  const { note } = data;
+  await models.JobNote.update(
+    { note, submitterId },
+    { where: { id } }
+  );
+  return await getJobnoteById(id);
+}
+
+const deleteJobnote = async (id) => {
+  return models.JobNote.destroy({ where: { id } });
+}
+
 module.exports = {
   getJobnoteByJob,
   getJobnoteBySubmitter,
-  getJobnoteById
+  getJobnoteById,
+  createJobnote,
+  updateJobnote,
+  deleteJobnote
 }

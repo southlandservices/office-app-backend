@@ -1,3 +1,5 @@
+const logger = require('./logger')
+
 const handleInitialSuccess = (h, data) => {
   return !data ?
     boom.notFound() :

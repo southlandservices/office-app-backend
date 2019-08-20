@@ -76,6 +76,29 @@ routes.push(
       tags: ['api', 'v1', 'job', 'jobnotes']
     }
   },
+  {
+    method: 'POST',
+    path: '/api/v1/jobs',
+    async handler(req, h) {
+      const data = JSON.parse(req.payload);
+      delete data.id;
+      const { role } = req.auth.credentials;
+      const allowedRoles = ['Admin'];
+      if (checkPermission(req, allowedRoles)) {
+        try {
+          const result = await service.createJob(data);
+          return handleInitialSuccess(h, result);
+        } catch (error) {
+          return handleInitialFailure(error, `Failed to create job`);
+        }
+      } else {
+        permissionError(h, role);
+      }
+    },
+    config: {
+      tags: ['api', 'v1', 'jobs', 'create']
+    }
+  },
 )
 
 module.exports = _.flattenDeep(routes);
