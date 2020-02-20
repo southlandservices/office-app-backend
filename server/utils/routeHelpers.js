@@ -1,5 +1,6 @@
 const logger = require('./logger')
 const boom = require('boom')
+const httpStatus = require('http-status')
 
 const handleInitialSuccess = (h, data) => {
   return !data ?
