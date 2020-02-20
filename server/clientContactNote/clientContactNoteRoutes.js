@@ -9,7 +9,7 @@ const routes = [];
 routes.push(
   {
     method: 'GET',
-    path: '/api/v1/clientContactNotes/submitter/{id}',
+    path: '/api/clientContactNotes/submitter/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -31,7 +31,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/clientContactNotes/{id}',
+    path: '/api/clientContactNotes/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -53,7 +53,7 @@ routes.push(
   },
   {
     method: 'POST',
-    path: '/api/v1/clientContactNotes',
+    path: '/api/clientContactNotes',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       delete data.id;
@@ -79,7 +79,7 @@ routes.push(
   },
   {
     method: 'PUT',
-    path: '/api/v1/clientContactNotes/{id}',
+    path: '/api/clientContactNotes/{id}',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       const { id } = req.params;
@@ -102,7 +102,7 @@ routes.push(
   },
   {
     method: 'DELETE',
-    path: '/api/v1/clientContactNotes/{id}',
+    path: '/api/clientContactNotes/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;

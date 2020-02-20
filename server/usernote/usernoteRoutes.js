@@ -9,7 +9,7 @@ const routes = [];
 routes.push(
   {
     method: 'GET',
-    path: '/api/v1/usernotes/user/{id}',
+    path: '/api/usernotes/user/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -31,7 +31,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/usernotes/submitter/{id}',
+    path: '/api/usernotes/submitter/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -53,7 +53,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/usernotes/{id}',
+    path: '/api/usernotes/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -75,7 +75,7 @@ routes.push(
   },
   {
     method: 'POST',
-    path: '/api/v1/usernotes',
+    path: '/api/usernotes',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       delete data.id;
@@ -101,7 +101,7 @@ routes.push(
   },
   {
     method: 'PUT',
-    path: '/api/v1/usernotes/{id}',
+    path: '/api/usernotes/{id}',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       const { id } = req.params;
@@ -124,7 +124,7 @@ routes.push(
   },
   {
     method: 'DELETE',
-    path: '/api/v1/usernotes/{id}',
+    path: '/api/usernotes/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
