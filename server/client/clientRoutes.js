@@ -9,7 +9,7 @@ const routes = [];
 routes.push(
   {
     method: 'GET',
-    path: '/api/v1/clients',
+    path: '/api/clients',
     async handler(req, h) {
       const { query } = req;
       const { role } = req.auth.credentials;
@@ -33,7 +33,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/clients/{id}',
+    path: '/api/clients/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -55,7 +55,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/clients/{id}/contacts',
+    path: '/api/clients/{id}/contacts',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -77,7 +77,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/clients/{id}/contacts/{contactId}',
+    path: '/api/clients/{id}/contacts/{contactId}',
     async handler(req, h) {
       const { id, contactId } = req.params;
       const { role } = req.auth.credentials;

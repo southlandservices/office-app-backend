@@ -10,7 +10,7 @@ const routes = [];
 routes.push(
   {
     method: 'GET',
-    path: '/api/v1/jobs',
+    path: '/api/jobs',
     async handler(req, h) {
       const { query } = req;
       const { role } = req.auth.credentials;
@@ -34,7 +34,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/jobs/{id}',
+    path: '/api/jobs/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -56,7 +56,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/jobs/{id}/notes',
+    path: '/api/jobs/{id}/notes',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -78,7 +78,7 @@ routes.push(
   },
   {
     method: 'POST',
-    path: '/api/v1/jobs',
+    path: '/api/jobs',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       delete data.id;

@@ -9,7 +9,7 @@ const routes = [];
 routes.push(
   {
     method: 'GET',
-    path: '/api/v1/shippers',
+    path: '/api/shippers',
     async handler(req, h) {
       const { query } = req;
       const { role } = req.auth.credentials;
@@ -33,7 +33,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/shippers/{id}',
+    path: '/api/shippers/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -55,7 +55,7 @@ routes.push(
   },
   {
     method: 'POST',
-    path: '/api/v1/shippers',
+    path: '/api/shippers',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       delete data.id;

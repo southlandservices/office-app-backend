@@ -9,7 +9,7 @@ const routes = [];
 routes.push(
   {
     method: 'GET',
-    path: '/api/v1/search/all',
+    path: '/api/search/all',
     async handler(req, h) {
       const { query } = req;
       const { role } = req.auth.credentials;
