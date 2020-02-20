@@ -7,9 +7,10 @@ const _ = require('lodash')
 // add ping route by default for health check
 const routes = [{
   method: 'GET',
-  path: '/ping',
-  handler: function (request, reply) {
-    return reply('pong')
+  path: '/api/v1/ping',
+  handler: function (req, h) {
+    // return reply('pong')
+    return h.response('pong');
   },
   config: {
     tags: ['api']
