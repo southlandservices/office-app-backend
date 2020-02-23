@@ -10,14 +10,14 @@ const routes = [];
 routes.push(
   {
     method: 'POST',
-    path: '/api/v1/authentication',
+    path: '/api/authentication',
     handler: async (req, h) => {
       const { email, password } = req.payload;
       try {
         const authenticated = await login(email, password);
         return handleInitialSuccess(h, authenticated);
       } catch (error) {
-        return handleInitialFailure(error, 'Failed to authenticate');
+        return handleInitialFailure(error, 'Failed to authenticate', h);
       }
     },
     config: { 

@@ -1,7 +1,7 @@
 'use strict';
 
-const _ = require('lodash')
-const service = require('./roleService');
+const _ = require('lodash');
+const search = require('./searchService');
 const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
 
 const routes = [];
@@ -9,28 +9,26 @@ const routes = [];
 routes.push(
   {
     method: 'GET',
-    path: '/api/roles',
+    path: '/api/search/all',
     async handler(req, h) {
       const { query } = req;
       const { role } = req.auth.credentials;
-      const allowedRoles = ['Admin', 'Manager', 'Customer Service', 'Tech'];
+      const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
-          const result = (!query || _.isEmpty(query)) ?
-            await service.getRoles() :
-            await service.getRole(query, role);
-          return handleInitialSuccess(h, result);
+          const data = await search.searchAll(query, role);
+          return handleInitialSuccess(h, data);
         } catch (error) {
-          return handleInitialFailure(error, 'Failed to retrieve role(s)');
+          return handleInitialFailure(error, 'Failed to retrieve results', h);
         }
       } else {
         permissionError(h, role);
       }
     },
     config: {
-      tags: ['api', 'v1', 'roles']
+      tags: ['api', 'v1', 'search', 'all']
     }
   }
-);
+)
 
 module.exports = _.flattenDeep(routes);

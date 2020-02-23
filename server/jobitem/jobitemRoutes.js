@@ -8,7 +8,7 @@ const routes = [];
 routes.push(
   {
     method: 'GET',
-    path: '/api/v1/jobitems/job/{id}',
+    path: '/api/jobitems/job/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -30,7 +30,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/jobitems/{id}',
+    path: '/api/jobitems/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -52,7 +52,7 @@ routes.push(
   },
   {
     method: 'POST',
-    path: '/api/v1/jobitems',
+    path: '/api/jobitems',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       delete data.id;
@@ -78,7 +78,7 @@ routes.push(
   },
   {
     method: 'PUT',
-    path: '/api/v1/jobitems/{id}',
+    path: '/api/jobitems/{id}',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       const { id } = req.params;
@@ -101,7 +101,7 @@ routes.push(
   },
   {
     method: 'DELETE',
-    path: '/api/v1/jobitems/{id}',
+    path: '/api/jobitems/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;

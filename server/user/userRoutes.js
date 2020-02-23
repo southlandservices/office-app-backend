@@ -10,7 +10,7 @@ const routes = [];
 routes.push(
   {
     method: 'GET',
-    path: '/api/v1/users',
+    path: '/api/users',
     async handler(req, h) {
       const { query } = req;
       const { role } = req.auth.credentials;
@@ -34,7 +34,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/users/{id}',
+    path: '/api/users/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -56,7 +56,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/users/{id}/notes',
+    path: '/api/users/{id}/notes',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -78,7 +78,7 @@ routes.push(
   },
   {
     method: 'POST',
-    path: '/api/v1/users/{id}/note',
+    path: '/api/users/{id}/note',
     async handler(req, h) {
       const { id } = req.params;
       const data = req.payload;  // const data = JSON.parse(req.payload);
@@ -102,7 +102,7 @@ routes.push(
   },
   {
     method: 'PUT',
-    path: '/api/v1/users/{id}/note/{noteId}',
+    path: '/api/users/{id}/note/{noteId}',
     async handler(req, h) {
       const data = req.payload; // const data = JSON.parse(req.payload);
       const { id, noteId } = req.params;
@@ -125,7 +125,7 @@ routes.push(
   },
   {
     method: 'DELETE',
-    path: '/api/v1/users/{id}/note/{noteId}',
+    path: '/api/users/{id}/note/{noteId}',
     async handler(req, h) {
       const { id, noteId } = req.params;
       const { role } = req.auth.credentials;
@@ -147,7 +147,7 @@ routes.push(
   },
   {
     method: 'POST',
-    path: '/api/v1/users',
+    path: '/api/users',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       if(!data.role) { data.role = "4" }
@@ -171,7 +171,7 @@ routes.push(
   },
   {
     method: 'PUT',
-    path: '/api/v1/users/{id}',
+    path: '/api/users/{id}',
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       const { id } = req.params;
@@ -194,7 +194,7 @@ routes.push(
   },
   {
     method: 'DELETE',
-    path: '/api/v1/users/{id}',
+    path: '/api/users/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;

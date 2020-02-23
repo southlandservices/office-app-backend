@@ -10,7 +10,7 @@ const routes = [];
 routes.push(
   {
     method: 'GET',
-    path: '/api/v1/clientContacts',
+    path: '/api/clientContacts',
     async handler(req, h) {
       const { query } = req;
       const { role } = req.auth.credentials;
@@ -34,7 +34,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/clientContacts/{id}',
+    path: '/api/clientContacts/{id}',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;
@@ -56,7 +56,7 @@ routes.push(
   },
   {
     method: 'GET',
-    path: '/api/v1/clientContacts/{id}/notes',
+    path: '/api/clientContacts/{id}/notes',
     async handler(req, h) {
       const { id } = req.params;
       const { role } = req.auth.credentials;

@@ -7,10 +7,10 @@
     "dialect": "mysql"
   },
   "development": {
-    "username": "root",
-    "password": "",
+    "username": "admin",
+    "password": "$0UTHland",
     "database": "southland_development",
-    "host": "127.0.0.1",
+    "host": "southland-office-development.cfjqzg50nyho.us-east-2.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {

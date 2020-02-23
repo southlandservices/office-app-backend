@@ -1,4 +1,6 @@
 const logger = require('./logger')
+const boom = require('boom')
+const httpStatus = require('http-status')
 
 const handleInitialSuccess = (h, data) => {
   return !data ?
@@ -6,7 +8,7 @@ const handleInitialSuccess = (h, data) => {
     h.response({ data });
 }
 
-const handleInitialFailure = (error, errorMessage) => {
+const handleInitialFailure = (error, errorMessage, h) => {
   !error.logged && logger.error(error, errorMessage)
   return h.response(boom.boomify(error, { statusCode: httpStatus.INTERNAL_SERVER_ERROR, message: errorMessage }))
 }
