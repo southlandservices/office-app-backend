@@ -1,9 +1,16 @@
 {
-  "development": {
-    "username": "admin",
-    "password": "$0UTHland",
+  "local": {
+    "username": "root",
+    "password": "",
     "database": "southland_development",
-    "host": "southland-office-development.cfjqzg50nyho.us-east-2.rds.amazonaws.com",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "development": {
+    "username": "root",
+    "password": "",
+    "database": "southland_development",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {

@@ -15,14 +15,24 @@
     "yarn": ">=0.27.5"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "better-npm-run start",
     "test": "NODE_ENV=test istanbul --include-all-sources cover _mocha -- -u bdd $(find test -name '*.js') && istanbul check-coverage && echo All tests passed 👍",
     "report-coverage": "codeclimate-test-reporter < ./coverage/lcov.info",
     "db:migrate": "sequelize db:migrate",
     "db:seed": "sequelize db:seed:all"
   },
+  "betterScripts": {
+    "start": {
+      "command": "node index.js",
+      "env": {
+        "NODE_ENV": "local",
+        "ENV": "local"
+      }
+    }
+  },
   "dependencies": {
     "bcrypt": "3.0.6",
+    "better-npm-run": "^0.1.1",
     "bluebird": "3.5.4",
     "boom": "7.3.0",
     "bunyan": "1.8.12",
@@ -39,7 +49,6 @@
     "jsonwebtoken": "8.5.1",
     "lodash": "4.17.11",
     "mysql2": "1.6.5",
-    "newrelic": "5.6.4",
     "sequelize": "5.7.1",
     "uuid": "3.3.2",
     "vision": "5.4.4"
