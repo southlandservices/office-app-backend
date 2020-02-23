@@ -1,10 +1,5 @@
 'use strict'
 
-// require new relic at the top only in production environment
-if (process.env.NODE_ENV === 'production') {
-  require('newrelic')
-}
-
 const config = require('config')
 const server = require('./server')
 const logger = require('./server/utils/logger')
