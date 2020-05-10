@@ -2,7 +2,13 @@
 
 const _ = require('lodash')
 const service = require('./clientService');
-const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
+const { 
+  handleInitialSuccess, 
+  handleInitialFailure, 
+  permissionError, 
+  checkPermission,
+  getRole
+} = require('../utils/routeHelpers');
 
 const routes = [];
 
@@ -12,9 +18,9 @@ routes.push(
     path: '/api/clients',
     async handler(req, h) {
       const { query } = req;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = (!query || _.isEmpty(query)) ?
             await service.getClients() :
@@ -36,9 +42,9 @@ routes.push(
     path: '/api/clients/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.getClientById(id, role);
           return handleInitialSuccess(h, data);
@@ -58,9 +64,9 @@ routes.push(
     path: '/api/clients/{id}/contacts',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.getClientContactsByClientId(id);
           return handleInitialSuccess(h, data);
@@ -80,9 +86,9 @@ routes.push(
     path: '/api/clients/{id}/contacts/{contactId}',
     async handler(req, h) {
       const { id, contactId } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.getClientContactByContactId(contactId);
           return handleInitialSuccess(h, data);

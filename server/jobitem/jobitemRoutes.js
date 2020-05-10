@@ -2,7 +2,14 @@
 
 const _ = require('lodash');
 const service = require('./jobitemService');
-const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
+const { 
+  handleInitialSuccess, 
+  handleInitialFailure, 
+  permissionError, 
+  checkPermission,
+  getRole,
+  getUserId
+} = require('../utils/routeHelpers');
 const routes = [];
 
 routes.push(
@@ -11,9 +18,9 @@ routes.push(
     path: '/api/jobitems/job/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.getJobItemsByJobId(id, role);
           return handleInitialSuccess(h, data);
@@ -33,9 +40,9 @@ routes.push(
     path: '/api/jobitems/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.getJobItemById(id);
           return handleInitialSuccess(h, data);
@@ -56,9 +63,10 @@ routes.push(
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       delete data.id;
-      const { role, userId } = req.auth.credentials;
+      const role = getRole(req);
+      const userId = getUserId(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service', 'Tech'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const updatedData = Object.assign({}, data, {
             submitterId: userId
@@ -82,9 +90,9 @@ routes.push(
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service', 'Tech'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const updated = await service.updateJobItem(id, data);
           return handleInitialSuccess(h, updated);
@@ -104,9 +112,9 @@ routes.push(
     path: '/api/jobitems/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.deleteJobItem(id);
           return handleInitialSuccess(h, data);

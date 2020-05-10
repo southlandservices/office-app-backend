@@ -2,7 +2,13 @@
 
 const _ = require('lodash')
 const service = require('./roleService');
-const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
+const { 
+  handleInitialSuccess, 
+  handleInitialFailure, 
+  permissionError, 
+  checkPermission,
+  getRole 
+} = require('../utils/routeHelpers');
 
 const routes = [];
 
@@ -12,9 +18,9 @@ routes.push(
     path: '/api/roles',
     async handler(req, h) {
       const { query } = req;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service', 'Tech'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const result = (!query || _.isEmpty(query)) ?
             await service.getRoles() :
