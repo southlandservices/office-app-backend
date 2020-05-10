@@ -18,8 +18,6 @@ const routes = [];
   const decoded = jwt.decode(req.headers.authorization)
   to decode the token.  Then get the role via:
   const role = _.get(decoded, 'role').
-  Make a helper to do it in one place.
-  Then we'll be able to have and check the role
 */
 
 routes.push(
@@ -28,8 +26,6 @@ routes.push(
     path: '/api/users',
     async handler(req, h) {
       const { query } = req;
-      debugger;
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if(checkPermission(role, allowedRoles)) {

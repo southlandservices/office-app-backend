@@ -12,3 +12,8 @@
 
 ## Startup (AWS)
 - `cd /opt/back-end/ && sudo pm2 start ecosystem.config.js`
+
+## Contributing
+- Use WSL
+- Push via `git push --set-upstream origin feat/<feature>`
+- so.......vices:F......#
