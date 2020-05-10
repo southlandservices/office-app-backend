@@ -2,7 +2,14 @@
 
 const _ = require('lodash')
 const service = require('./jobnoteService');
-const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
+const { 
+  handleInitialSuccess, 
+  handleInitialFailure, 
+  permissionError, 
+  checkPermission,
+  getRole,
+  getUserId
+} = require('../utils/routeHelpers');
 
 const routes = [];
 
@@ -12,9 +19,9 @@ routes.push(
     path: '/api/jobnotes/job/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.getJobnoteByJob(id, role);
           return handleInitialSuccess(h, data);
@@ -34,9 +41,9 @@ routes.push(
     path: '/api/jobnotes/submitter/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.getJobnoteBySubmitter(id, role);
           return handleInitialSuccess(h, data);
@@ -56,9 +63,9 @@ routes.push(
     path: '/api/jobnotes/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.getJobnoteById(id, role);
           return handleInitialSuccess(h, data);
@@ -79,9 +86,10 @@ routes.push(
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       delete data.id;
-      const { role, userId } = req.auth.credentials;
+      const role = getRole(req);
+      const userId = getUserId(req);
       const allowedRoles = ['Admin'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const updatedData = Object.assign({}, data, {
             submitterId: userId
@@ -105,9 +113,10 @@ routes.push(
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       const { id } = req.params;
-      const { role, userId } = req.auth.credentials;
+      const role = getRole(req);
+      const userId = getUserId(req);
       const allowedRoles = ['Admin'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const updated = await service.updateJobnote(id, data, userId);
           return handleInitialSuccess(h, updated);
@@ -127,9 +136,9 @@ routes.push(
     path: '/api/jobnotes/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.deleteJobnote(id);
           return handleInitialSuccess(h, data);
