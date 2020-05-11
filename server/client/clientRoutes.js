@@ -2,7 +2,7 @@
 
 const _ = require('lodash')
 const service = require('./clientService');
-const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
+const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission, getRole } = require('../utils/routeHelpers');
 
 const routes = [];
 
@@ -12,7 +12,8 @@ routes.push(
     path: '/api/clients',
     async handler(req, h) {
       const { query } = req;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -36,7 +37,8 @@ routes.push(
     path: '/api/clients/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -58,7 +60,8 @@ routes.push(
     path: '/api/clients/{id}/contacts',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -80,7 +83,8 @@ routes.push(
     path: '/api/clients/{id}/contacts/{contactId}',
     async handler(req, h) {
       const { id, contactId } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
