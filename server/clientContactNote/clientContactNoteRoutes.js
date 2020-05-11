@@ -2,7 +2,7 @@
 
 const _ = require('lodash')
 const service = require('./clientContactNoteService');
-const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
+const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission, getRole } = require('../utils/routeHelpers');
 
 const routes = [];
 
@@ -12,7 +12,8 @@ routes.push(
     path: '/api/clientContactNotes/submitter/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -34,7 +35,8 @@ routes.push(
     path: '/api/clientContactNotes/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -57,7 +59,9 @@ routes.push(
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       delete data.id;
-      const { role, userId } = req.auth.credentials;
+      // const { role, userId } = req.auth.credentials;
+      const role = getRole(req);
+      const { userId } = req.auth.credentials;
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -83,7 +87,9 @@ routes.push(
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       const { id } = req.params;
-      const { role, userId } = req.auth.credentials;
+      // const { role, userId } = req.auth.credentials;
+      const role = getRole(req);
+      const { userId } = req.auth.credentials;
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -105,7 +111,8 @@ routes.push(
     path: '/api/clientContactNotes/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
