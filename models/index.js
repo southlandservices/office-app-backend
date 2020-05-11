@@ -6,7 +6,8 @@ const Sequelize = require('sequelize');
 const mysql2 = require('mysql2');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+console.log('********* NODE_ENV ****************', process.env.NODE_ENV);
+const config = env === 'local' ? require(__dirname + '/../config/config.json') : require(__dirname + '/../../config.json')[env];
 const db = {};
 
 let sequelize;

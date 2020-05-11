@@ -90,6 +90,7 @@ const getUser = async (query, role) => {
 }
 
 const getUserForAuth = async(query) => {
+  console.log('************** QUERY **************', query);
   const parameterizedQuery = Object.assign({...baseQuery}, { attributes: authAttributes, where: query });
   const user = await models.User.findOne(parameterizedQuery);
   return user.dataValues;

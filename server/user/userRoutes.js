@@ -3,7 +3,7 @@
 const _ = require('lodash')
 const service = require('./userService');
 const notes = require('../usernote/usernoteService');
-const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
+const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission, getRole } = require('../utils/routeHelpers');
 
 const routes = [];
 
@@ -13,7 +13,10 @@ routes.push(
     path: '/api/users',
     async handler(req, h) {
       const { query } = req;
-      const { role } = req.auth.credentials;
+console.log('AUTHORIZATION', req.headers);
+console.log('AUTH', req.auth);
+      const role = getRole(req);
+console.log('ROLE', role);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if(checkPermission(req, allowedRoles)) {
         try {
@@ -37,7 +40,8 @@ routes.push(
     path: '/api/users/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -59,7 +63,8 @@ routes.push(
     path: '/api/users/{id}/notes',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -83,7 +88,8 @@ routes.push(
       const { id } = req.params;
       const data = req.payload;  // const data = JSON.parse(req.payload);
       if (data.id) { delete data.id; }
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -106,7 +112,8 @@ routes.push(
     async handler(req, h) {
       const data = req.payload; // const data = JSON.parse(req.payload);
       const { id, noteId } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -128,7 +135,8 @@ routes.push(
     path: '/api/users/{id}/note/{noteId}',
     async handler(req, h) {
       const { id, noteId } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -152,7 +160,8 @@ routes.push(
       const data = JSON.parse(req.payload);
       if(!data.role) { data.role = "4" }
       delete data.id;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -175,7 +184,8 @@ routes.push(
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -197,7 +207,8 @@ routes.push(
     path: '/api/users/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      // const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {

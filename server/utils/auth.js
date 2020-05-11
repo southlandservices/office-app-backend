@@ -29,9 +29,12 @@ exports.configureAuth = async (server) => {
 }
 
 exports.login = async (email, password) => {
+  console.log('EMAIL', email);
   const credentials = { email }
   const user = await userService.getUserForAuth(credentials);
+  console.log('USER', user);
   const valid = await bcrypt.compare(password, user.password);
+  console.log('VALID', valid);
   if (!valid) return Boom.notAcceptable();
   credentials.role = user.Role.name;
   credentials.userId = user.id;

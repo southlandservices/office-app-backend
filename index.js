@@ -60,7 +60,7 @@ const startServer = async function () {
   try {
     // add things here before the app starts, like database connection check etc
     const hapiServer = await server.deployment();
-    await configureAuth(hapiServer);
+    // await configureAuth(hapiServer);
     await hapiServer.start();
     initDb(() => {
       logger.info(`server started at port: ${config.get('app.port')} with env: ${config.util.getEnv('NODE_ENV')}`)
