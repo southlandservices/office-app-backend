@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const search = require('./searchService');
-const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission } = require('../utils/routeHelpers');
+const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission, getRole } = require('../utils/routeHelpers');
 
 const routes = [];
 
@@ -12,7 +12,7 @@ routes.push(
     path: '/api/search/all',
     async handler(req, h) {
       const { query } = req;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
         try {
