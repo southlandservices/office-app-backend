@@ -13,6 +13,13 @@ const {
 
 const routes = [];
 
+/* AWS RESOLUTION 
+  Use 
+  const decoded = jwt.decode(req.headers.authorization)
+  to decode the token.  Then get the role via:
+  const role = _.get(decoded, 'role').
+*/
+
 routes.push(
   {
     method: 'GET',
@@ -21,7 +28,7 @@ routes.push(
       const { query } = req;
       const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if(checkPermission(req, allowedRoles)) {
+      if(checkPermission(role, allowedRoles)) {
         try {
           const data = (!query || _.isEmpty(query)) ?
             await service.getUsers() :
@@ -43,9 +50,9 @@ routes.push(
     path: '/api/users/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.getUserById(id, role);
           return handleInitialSuccess(h, data);
@@ -65,9 +72,9 @@ routes.push(
     path: '/api/users/{id}/notes',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await notes.getUsernoteByUser(id, role);
           return handleInitialSuccess(h, data);
@@ -89,9 +96,9 @@ routes.push(
       const { id } = req.params;
       const data = req.payload;  // const data = JSON.parse(req.payload);
       if (data.id) { delete data.id; }
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const result = await notes.createUsernote(data);
           return handleInitialSuccess(h, result);
@@ -112,9 +119,9 @@ routes.push(
     async handler(req, h) {
       const data = req.payload; // const data = JSON.parse(req.payload);
       const { id, noteId } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const updated = await notes.updateUsernote(noteId, data);
           return handleInitialSuccess(h, updated);
@@ -134,9 +141,9 @@ routes.push(
     path: '/api/users/{id}/note/{noteId}',
     async handler(req, h) {
       const { id, noteId } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await notes.deleteUsernote(id, noteId);
           return handleInitialSuccess(h, data);
@@ -158,9 +165,9 @@ routes.push(
       const data = JSON.parse(req.payload);
       if(!data.role) { data.role = "4" }
       delete data.id;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const result = await service.createUser(data);
           return handleInitialSuccess(h, result);
@@ -181,9 +188,9 @@ routes.push(
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const updated = await service.updateUser(id, data);
           return handleInitialSuccess(h, updated);
@@ -203,9 +210,9 @@ routes.push(
     path: '/api/users/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      const { role } = req.auth.credentials;
+      const role = getRole(req);
       const allowedRoles = ['Admin'];
-      if (checkPermission(req, allowedRoles)) {
+      if (checkPermission(role, allowedRoles)) {
         try {
           const data = await service.deleteUser(id);
           return handleInitialSuccess(h, data);

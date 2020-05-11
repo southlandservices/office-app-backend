@@ -21,8 +21,8 @@ const permissionError = (h, role) => {
   return h.response(boom.boomify(error, { statusCode: httpStatus.INTERNAL_SERVER_ERROR, message: errorMessage }))
 }
 
-const checkPermission = (req, allowedRoles) => {
-  const { role } = req.auth.credentials;
+const checkPermission = (role, allowedRoles) => {
+  // const role = getRole(req);
   return allowedRoles.includes(role)
 }
 
