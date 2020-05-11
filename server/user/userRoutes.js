@@ -13,10 +13,7 @@ routes.push(
     path: '/api/users',
     async handler(req, h) {
       const { query } = req;
-console.log('AUTHORIZATION', req.headers);
-console.log('AUTH', req.auth);
       const role = getRole(req);
-console.log('ROLE', role);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if(checkPermission(req, allowedRoles)) {
         try {
@@ -40,7 +37,6 @@ console.log('ROLE', role);
     path: '/api/users/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
@@ -63,7 +59,6 @@ console.log('ROLE', role);
     path: '/api/users/{id}/notes',
     async handler(req, h) {
       const { id } = req.params;
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
@@ -88,7 +83,6 @@ console.log('ROLE', role);
       const { id } = req.params;
       const data = req.payload;  // const data = JSON.parse(req.payload);
       if (data.id) { delete data.id; }
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
@@ -112,7 +106,6 @@ console.log('ROLE', role);
     async handler(req, h) {
       const data = req.payload; // const data = JSON.parse(req.payload);
       const { id, noteId } = req.params;
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
@@ -135,7 +128,6 @@ console.log('ROLE', role);
     path: '/api/users/{id}/note/{noteId}',
     async handler(req, h) {
       const { id, noteId } = req.params;
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
@@ -160,7 +152,6 @@ console.log('ROLE', role);
       const data = JSON.parse(req.payload);
       if(!data.role) { data.role = "4" }
       delete data.id;
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
@@ -184,7 +175,6 @@ console.log('ROLE', role);
     async handler(req, h) {
       const data = JSON.parse(req.payload);
       const { id } = req.params;
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
@@ -207,7 +197,6 @@ console.log('ROLE', role);
     path: '/api/users/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {

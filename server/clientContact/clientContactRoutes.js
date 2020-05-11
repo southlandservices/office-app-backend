@@ -13,7 +13,6 @@ routes.push(
     path: '/api/clientContacts',
     async handler(req, h) {
       const { query } = req;
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
@@ -38,7 +37,6 @@ routes.push(
     path: '/api/clientContacts/{id}',
     async handler(req, h) {
       const { id } = req.params;
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
@@ -61,7 +59,6 @@ routes.push(
     path: '/api/clientContacts/{id}/notes',
     async handler(req, h) {
       const { id } = req.params;
-      // const { role } = req.auth.credentials;
       const role = getRole(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service'];
       if (checkPermission(req, allowedRoles)) {
