@@ -1,6 +1,8 @@
 const logger = require('./logger')
 const boom = require('boom')
 const httpStatus = require('http-status')
+const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 
 const handleInitialSuccess = (h, data) => {
   return !data ?
@@ -24,9 +26,30 @@ const checkPermission = (req, allowedRoles) => {
   return allowedRoles.includes(role)
 }
 
+const decodeAuth = (req) => {
+  const auth = _.get(req.headers, 'authorization');
+  if (!auth) return false;
+  const decoded = jwt.decode(auth);
+  return decoded
+}
+
+const getRole = (req) => {
+  const decoded = decodeAuth(req);
+  const role = _.get(decoded, 'role');
+  return role;
+}
+
+const getUserId = (req) => {
+  const decoded = decodeAuth(req);
+  const userId = _.get(decoded, 'userId');
+  return userId;
+}
+
 module.exports = {
   handleInitialSuccess,
   handleInitialFailure,
   checkPermission,
-  permissionError
+  permissionError,
+  getRole,
+  getUserId
 }

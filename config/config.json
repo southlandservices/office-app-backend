@@ -1,7 +1,7 @@
 {
   "local": {
     "username": "root",
-    "password": "",
+    "password": "root",
     "database": "southland_development",
     "host": "127.0.0.1",
     "dialect": "mysql"
@@ -21,10 +21,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
+    "username": "admin",
     "password": null,
     "database": "southland_production",
-    "host": "127.0.0.1",
+    "host": "127.0.0.53",
     "dialect": "mysql"
   }
 }
