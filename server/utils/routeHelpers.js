@@ -25,10 +25,8 @@ const permissionError = (h, role) => {
 }
 
 const checkPermission = (req, allowedRoles) => {
-  // const { role } = req.auth.credentials;
   const decoded = jwt.decode(req.headers.authorization);
   const role = _.get(decoded, 'role');
-console.log('ROLE (HELPERS)', role);
   return allowedRoles.includes(role)
 }
 

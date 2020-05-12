@@ -2,7 +2,7 @@
 
 const _ = require('lodash')
 const service = require('./clientContactNoteService');
-const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission, getRole } = require('../utils/routeHelpers');
+const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission, getRole, getUserId } = require('../utils/routeHelpers');
 
 const routes = [];
 
@@ -58,7 +58,8 @@ routes.push(
       const data = JSON.parse(req.payload);
       delete data.id;
       const role = getRole(req);
-      const { userId } = req.auth.credentials;
+      // const { userId } = req.auth.credentials;
+      const userId = getUserId(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {
@@ -85,7 +86,8 @@ routes.push(
       const data = JSON.parse(req.payload);
       const { id } = req.params;
       const role = getRole(req);
-      const { userId } = req.auth.credentials;
+      // const { userId } = req.auth.credentials;
+      const userId = getUserId(req);
       const allowedRoles = ['Admin'];
       if (checkPermission(req, allowedRoles)) {
         try {

@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const service = require('./jobitemService');
-const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission, getRole } = require('../utils/routeHelpers');
+const { handleInitialSuccess, handleInitialFailure, permissionError, checkPermission, getRole, getUserId } = require('../utils/routeHelpers');
 const routes = [];
 
 routes.push(
@@ -57,7 +57,8 @@ routes.push(
       const data = JSON.parse(req.payload);
       delete data.id;
       const role = getRole(req);
-      const { userId } = req.auth.credentials;
+      // const { userId } = req.auth.credentials;
+      const userId = getUserId(req);
       const allowedRoles = ['Admin', 'Manager', 'Customer Service', 'Tech'];
       if (checkPermission(req, allowedRoles)) {
         try {
