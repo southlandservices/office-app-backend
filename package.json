@@ -22,7 +22,7 @@
     "db:seed": "sequelize db:seed:all"
   },
   "dependencies": {
-    "bcrypt": "3.0.6",
+    "bcrypt": "5.0.0",
     "bluebird": "3.5.4",
     "boom": "7.3.0",
     "bunyan": "1.8.12",
